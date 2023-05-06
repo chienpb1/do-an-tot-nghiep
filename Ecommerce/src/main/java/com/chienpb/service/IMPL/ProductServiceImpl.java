@@ -1,5 +1,6 @@
 package com.chienpb.service.IMPL;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +51,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findByName(String name) {
-		return pRepo.findByName(name);
+		return pRepo.doSearch(name);
+	}
+
+	@Override
+	public List<Product> doSearch(String keyword) {
+		return pRepo.doSearch(keyword);
 	}
 
 	@Override
@@ -77,6 +83,14 @@ public class ProductServiceImpl implements ProductService {
 	public Product save(JsonNode data) {
 		ObjectMapper mapper = new ObjectMapper();
 		Product product = mapper.convertValue(data.get("p"), Product.class);
+		if(product.getId() == null){ // CREATE
+			product.setSold(0);
+			product.setCreateDate(LocalDateTime.now());
+		}else { // UPDATE
+			Product product1 = this.findById(product.getId());
+			product.setUpdateDate(LocalDateTime.now());
+			product.setCreateDate(product1.getCreateDate());
+		}
 
 		pRepo.save(product);
 

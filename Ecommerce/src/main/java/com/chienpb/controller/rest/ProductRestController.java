@@ -52,12 +52,21 @@ public class ProductRestController {
 		return map;
 	}
 
+//	@GetMapping("/{id}")
+//	public ResponseEntity<List<ProductCategory>> getProductDetail(@PathVariable("id") Long id) {
+//		if (!pService.existsById(id)) {
+//			return ResponseEntity.notFound().build();
+//		} else {
+//			return ResponseEntity.ok(pService.findByProductId(id));
+//		}
+//	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<List<ProductCategory>> getProductDetail(@PathVariable("id") Long id) {
+	public ResponseEntity<Product> getProductDetail(@PathVariable("id") Long id) {
 		if (!pService.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok(pService.findByProductId(id));
+			return ResponseEntity.ok(pService.findById(id));
 		}
 	}
 
@@ -65,7 +74,7 @@ public class ProductRestController {
 	public List<Product> searchProduct(@RequestParam("kw") Optional<String> kw){
 		String keyword = kw.orElse(null);		
 		if(keyword != null) {
-			return pService.findByName("%"+keyword+"%");
+			return pService.doSearch(keyword);
 		}else {
 			return pService.findAll();
 		}
@@ -114,6 +123,7 @@ public class ProductRestController {
 	public void deleteProductCategory(@PathVariable("id") Long id){
 		pService.deleteProductCateById(id);
 	}
+
 	@PostMapping("/productcategory")
 	public ProductCategory postProductCategory(@RequestBody ProductCategory productCates) {
 		return pService.saveProductCates(productCates);

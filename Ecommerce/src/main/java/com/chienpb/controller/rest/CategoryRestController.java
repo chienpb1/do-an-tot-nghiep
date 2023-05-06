@@ -1,5 +1,7 @@
 package com.chienpb.controller.rest;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +60,7 @@ public class CategoryRestController {
 		if(cService.existsById(cate.getId())) {
 			return ResponseEntity.badRequest().build();
 		}else {
+			cate.setUpdateDate(LocalDateTime.now());
 			return ResponseEntity.ok(cService.save(cate));
 		}
 	}
@@ -68,6 +71,7 @@ public class CategoryRestController {
 		if(!cService.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}else {
+			cate.setUpdateDate(LocalDateTime.now());
 			return ResponseEntity.ok(cService.save(cate));
 		}
 	}

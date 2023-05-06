@@ -60,7 +60,8 @@ app.controller("category-ctrl", function ($scope, $http) {
     $scope.reset = function () {
         $scope.cate = {
             id: "",
-            name: ""
+            name: "",
+            available: true
         };
         $scope.chon = false;
     }

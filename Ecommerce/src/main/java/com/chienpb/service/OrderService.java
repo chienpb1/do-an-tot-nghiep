@@ -2,6 +2,7 @@ package com.chienpb.service;
 
 import java.util.List;
 
+import com.chienpb.dto.OrderDTO;
 import com.chienpb.model.Order;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -18,5 +19,9 @@ public interface OrderService {
 	List<Order> findOrderInMonth(Integer month);
 
 	Integer countOrderInMonth(Integer month);
+
+	List<OrderDTO> getAll();
+
+	List<OrderDTO> findByDate(String date);
 	
 }

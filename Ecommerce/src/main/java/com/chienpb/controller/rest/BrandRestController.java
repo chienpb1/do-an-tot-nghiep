@@ -1,8 +1,14 @@
 package com.chienpb.controller.rest;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.chienpb.model.Account;
+import com.chienpb.model.ImpactLog;
+import com.chienpb.service.ImpactLogService;
+import com.chienpb.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +34,12 @@ public class BrandRestController {
 	BrandService bService;
 	@Autowired
 	UploadService uService;
+
+	@Autowired
+	SessionService session;
+
+	@Autowired
+	ImpactLogService iService;
 
 	@GetMapping("")
 //	@ResponseBody
@@ -57,7 +69,15 @@ public class BrandRestController {
 		if(bService.existsById(brand.getId())) {
 			return ResponseEntity.badRequest().build();
 		}else {
-			return ResponseEntity.ok(bService.save(brand));
+			brand.setCreateDate(LocalDateTime.now());
+			bService.save(brand);
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Thêm thương hiệu bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
+			return ResponseEntity.ok(brand);
 		}
 	}
 	
@@ -66,7 +86,15 @@ public class BrandRestController {
 		if(!bService.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}else {
-			return ResponseEntity.ok(bService.save(brand));
+			brand.setUpdateDate(LocalDateTime.now());
+			bService.save(brand);
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Cập nhật thương hiệu bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
+			return ResponseEntity.ok(brand);
 		}
 	}
 	@DeleteMapping("/{id}")
@@ -81,6 +109,12 @@ public class BrandRestController {
 				uService.delete("brand", filename);
 			}
 			bService.deleteById(id);
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Xóa thương hiệu bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
 			return ResponseEntity.ok().build();
 		}
 	}

@@ -1,20 +1,23 @@
 let urlProduct = "/admin/rest/products";
 app.controller("product-ctrl", function ($scope, $http) {
-    $scope.product = {};
-    $scope.db = [];
+    $scope.product = {};  //product items
+    $scope.db = []; //list all product
     $scope.pageSize = 10;
+    $scope.listCategoryActive = [];
+
 
     $scope.init = function () {
         //LOAD DB
         $http.get(urlProduct).then(resp => {
             $scope.db = resp.data;
-            $scope.db.products.forEach(p => {
-                p.createDate = new Date(p.createDate);
-            });
+            $scope.listCategoryActive =  $scope.db.categories.filter(c => c.available === true).map(c => c);
+
         }).catch(error => {
             alert("Load data fail");
         });
         $scope.start = 0;
+
+        // $scope.listCategoryActive = $scope.db.categories.map(c => c.available);
     }
     $scope.next = function(){
         if($scope.start < $scope.db.products.length - $scope.pageSize){
@@ -39,8 +42,10 @@ app.controller("product-ctrl", function ($scope, $http) {
 
     //HAM EDIT
     $scope.edit = function (id) {
+        console.log(" id " + id)
         $http.get(`${urlProduct}/${id}`).then(resp => {
-            $scope.product = resp.data[0].product;
+            console.log(" sp " + resp.data[0])
+            $scope.product = resp.data;
             $scope.product.createDate = new Date($scope.product.createDate);
             $scope.product.images = JSON.parse($scope.product.images);
         })
@@ -76,11 +81,15 @@ app.controller("product-ctrl", function ($scope, $http) {
         var data = {
             p: {
                 name: product.name,
+                description: product.description,
                 price: +product.price,
-                createDate: product.createDate,
+                unitsInStock: product.unitsInStock,
                 available: product.available,
                 brand: {
                     id: product.brand.id,
+                },
+                category: {
+                    id: product.category.id,
                 },
                 images: JSON.stringify(product.images),
             }
@@ -102,11 +111,15 @@ app.controller("product-ctrl", function ($scope, $http) {
             p: {
                 id: product.id,
                 name: product.name,
+                description: product.description,
                 price: +product.price,
-                createDate: product.createDate,
+                unitsInStock: product.unitsInStock,
                 available: product.available,
                 brand: {
                     id: product.brand.id,
+                },
+                category: {
+                    id: product.category.id,
                 },
                 images: JSON.stringify(product.images),
             }
@@ -144,7 +157,6 @@ app.controller("product-ctrl", function ($scope, $http) {
             id: -1,
             name: '',
             price: 0,
-            createDate: new Date(),
             available: true,
             brand: { id: "BRZ" },
             images: ["logo.jpg"],
@@ -160,8 +172,15 @@ app.controller("product-ctrl", function ($scope, $http) {
         var index = $scope.db.brands.findIndex(b => b.id == bid);
         return $scope.db.brands[index].name;
     };
+    $scope.categoryName = function (cid) {
+        console.log(cid + " cid")
+        let index = $scope.db.categories.findIndex(c => c.id == cid);
+        console.log(index + " INDEX")
+        return $scope.db.categories[index].name;
+    };
     //HAM CHECK PRODUCT CATEGORY
     $scope.updateProductCates = function (pid, cid) {
+        console.log($scope + " SCOPE")
         var index = $scope.indexOf(pid, cid);
         if (index >= 0) {
             var id = $scope.db.productCates[index].id;

@@ -1,6 +1,7 @@
 package com.chienpb.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +33,12 @@ public class Order implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "createdate")
-	private Date createDate = new Date();
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
+
 	private String address;
+
+	private Double total;
 
 	@ManyToOne
 	@JoinColumn(name = "username")

@@ -3,7 +3,7 @@
         <!-- begin page title -->
         <div class="d-block d-lg-flex flex-nowrap align-items-center">
             <div class="page-title mr-4 pr-4 border-right">
-                <h1>Product Manager</h1>
+                <h1>Quản lý sản phẩm</h1>
             </div>
 
             <div class="ml-auto d-flex align-items-center secondary-menu text-center">
@@ -22,14 +22,14 @@
                 <div class="card-heading">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="card-title">Edit Product</h4>
+                            <h4 class="card-title">Thông tin sản phẩm</h4>
                         </div>
-                        <div class="col-md-3 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModal">
-                                Edit Category
-                            </button>
-                        </div>
+<!--                        <div class="col-md-3 text-right">-->
+<!--                            <button type="button" class="btn btn-primary" data-toggle="modal"-->
+<!--                                data-target="#exampleModal">-->
+<!--                                Edit Category-->
+<!--                            </button>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -56,40 +56,70 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Name</label>
-                                                <input name="name" ng-model="product.name" required type="text"
+                                                <label>Tên sản phẩm<span style="color: red">*</span></label>
+                                                <input name="name" ng-model="product.name" ng-required="true" type="text"
                                                     class="form-control">
-                                                <div ng-show="frmProduct.name.$invalid" class="badge badge-danger m-2">
-                                                    Product not null</div>
+                                                <div ng-show="frmProduct.name.$dirty && frmProduct.name.$error.required"
+                                                     class="badge badge-danger m-2">Tên sản phẩm không được để trống
+                                                </div>
                                             </div>
-                                            <div class="form-group ">
-                                                <label>Price</label>
-                                                <input name="price" ng-model="product.price" required ng-min="0"
-                                                    type="number" class="form-control">
-                                                <div ng-show="frmProduct.price.$invalid" class="badge badge-danger m-2">
-                                                    Product not null</div>
+
+                                            <div class="form-group">
+                                                <label>Mô tả</label>
+                                                <input name="name" ng-model="product.description" type="text"
+                                                       class="form-control">
                                             </div>
+
                                             <div class="form-group ">
-                                                <label>Create Date</label>
-                                                <input ng-model="product.createDate | date: 'dd-MM-yyyy'" type="text"
-                                                    class="form-control">
+                                                <label>Giá sản phẩm<span style="color: red">*</span></label>
+                                                <input name="price" ng-model="product.price" ng-required="true" ng-min="0"
+                                                    type="number" ng-pattern="/^[1-9]\d*$/" class="form-control">
+                                                <div ng-show="frmProduct.price.$dirty && frmProduct.price.$error.required"
+                                                     class="badge badge-danger m-2">Giá sản phẩm không được để trống
+                                                </div>
+                                                <div ng-show="frmProduct.price.$dirty && frmProduct.price.$error.pattern"
+                                                     class="badge badge-danger m-2">Giá sản phẩm là số nguyên lớn hơn 0
+                                                </div>
                                             </div>
+
                                             <div class="form-group ">
-                                                <label>Brand</label>
+                                                <label>Số lượng<span style="color: red">*</span></label>
+                                                <input name="unitsInStock" ng-model="product.unitsInStock" ng-required="true" ng-min="0"
+                                                       type="number" ng-pattern="/^0$|^[1-9]\d*$/" class="form-control">
+                                                <div ng-show="frmProduct.unitsInStock.$dirty && frmProduct.unitsInStock.$error.required"
+                                                     class="badge badge-danger m-2">Số lượng không được để trống
+                                                </div>
+                                                <div ng-show="frmProduct.unitsInStock.$dirty && frmProduct.unitsInStock.$error.pattern"
+                                                     class="badge badge-danger m-2">Số lượng lớn hơn hoặc bằng 0
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label>Thương hiệu</label>
                                                 <select ng-model="product.brand.id" class="form-control">
                                                     <option ng-repeat="b in db.brands" ng-value="b.id">{{b.name}}
                                                     </option>
                                                 </select>
                                                 <!-- <div ng-show="frmProduct.name.$invalid" class="badge badge-danger m-2">Product not null</div> -->
                                             </div>
+
+                                            <div class="form-group ">
+                                                <label>Danh mục</label>
+                                                <select ng-model="product.category.id" class="form-control">
+                                                    <option ng-repeat="c in listCategoryActive" ng-value="c.id">{{c.name}}
+                                                    </option>
+                                                </select>
+                                                <!-- <div ng-show="frmProduct.name.$invalid" class="badge badge-danger m-2">Product not null</div> -->
+                                            </div>
+
                                             <div class="form-group">
-                                                <label class="mr-2">Available</label>
+                                                <label class="mr-2">Trạng thái</label>
                                                 <div class="form-check-inline">
                                                     <input ng-model="product.available" class="form-check-input"
                                                         type="radio" name="available" id="gridRadios1" ng-value="true"
                                                         ng-checked="product.available">
                                                     <label class="form-check-label" for="gridRadios1">
-                                                        True
+                                                        Active
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
@@ -97,12 +127,13 @@
                                                         type="radio" name="available" id="gridRadios2" ng-value="false"
                                                         ng-checked="product.available">
                                                     <label class="form-check-label" for="gridRadios2">
-                                                        False
+                                                        Non active
                                                     </label>
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
-                                                <label>Image</label>
+                                                <label>Ảnh sản phẩm</label>
                                                 <input type="file" accept="image/*" multiple
                                                     onchange="angular.element(this).scope().imageChanged(this.files)">
                                             </div>
@@ -110,13 +141,13 @@
                                     </div>
                                     <div class="mt-3">
                                         <button ng-disabled="frmProduct.$invalid || chon == true" ng-click="create()"
-                                            class="btn btn-primary">Create</button>
+                                            class="btn btn-primary">Thêm mới</button>
                                         <button
                                             ng-disabled="frmProduct.$invalid || frmProduct.$pristine || chon == false"
-                                            ng-click="update(product.id)" class="btn btn-info">Update</button>
-                                        <button ng-click="reset()" class="btn btn-default">Reset</button>
+                                            ng-click="update(product.id)" class="btn btn-info">Cập nhật</button>
+                                        <button ng-click="reset()" class="btn btn-default">Nhập lại</button>
                                         <button ng-disabled="chon == false" ng-click="delete(product.id)"
-                                            class="btn btn-dark">Delete</button>
+                                            class="btn btn-dark">Xóa</button>
 
                                     </div>
 
@@ -136,13 +167,13 @@
                 <div class="card-heading">
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <h4 class="card-title">Product Table</h4>
+                            <h4 class="card-title">Danh sách sản phẩm</h4>
                         </div>
                         <div class="col-md-6">
                             <form class="justify-content-end">
                                 <div class="form-group">
                                     <input oninput="angular.element(this).scope().search(this.value)" type="text"
-                                        class="form-control" placeholder="Search">
+                                        class="form-control" placeholder="Nhập tên sản phẩm...">
                                 </div>
                             </form>
                         </div>
@@ -155,11 +186,15 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Create Date</th>
-                                <th scope="col">Available</th>
-                                <th scope="col">Brand</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Mô tả</th>
+                                <th scope="col">Giá sản phẩm</th>
+                                <th scope="col">Số lượng trong kho</th>
+                                <th scope="col">Thương hiệu</th>
+                                <th scope="col">Danh mục</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Ngày tạo</th>
+                                <th scope="col">Ngày cập nhật</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -167,13 +202,17 @@
                             <tr ng-repeat="p in db.products | orderBy: p.id | limitTo : pageSize : start">
                                 <th scope="row">{{p.id}}</th>
                                 <td>{{p.name}}</td>
-                                <td>{{p.price}}</td>
-                                <td>{{p.createDate | date: 'dd-MM-yyyy'}}</td>
-                                <td>{{p.available?'Yes':'No'}}</td>
+                                <td>{{p.description}}</td>
+                                <td>{{p.price | number:0}}</td>
+                                <td>{{p.unitsInStock}}</td>
                                 <td>{{brandName(p.brand.id)}}</td>
+                                <td>{{categoryName(p.category.id)}}</td>
+                                <td>{{p.available?'Active':'Non active'}}</td>
+                                <td>{{p.createDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td>{{p.updateDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                 <td class="text-right">
-                                    <button ng-click="edit(p.id)" class="btn btn-primary">Edit</button>
-                                    <button ng-click="delete(p.id)" class="btn btn-dark">Delete</button>
+                                    <button ng-click="edit(p.id)" class="btn btn-primary">Sửa</button>
+                                    <button ng-click="delete(p.id)" class="btn btn-dark">Xóa</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -194,54 +233,54 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header row">
-                    <div class="col-md-4 text-left">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Product Category</h5>
-                    </div>
-                    <div class="col-md-7">
-                        <form class="justify-content-end">
-                            <div class="form-group">
-                                <input oninput="angular.element(this).scope().search(this.value)" type="text"
-                                    class="form-control" placeholder="Search">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-lg">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header row">-->
+<!--                    <div class="col-md-4 text-left">-->
+<!--                        <h5 class="modal-title" id="exampleModalLabel">Edit Product Category</h5>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-7">-->
+<!--                        <form class="justify-content-end">-->
+<!--                            <div class="form-group">-->
+<!--                                <input oninput="angular.element(this).scope().search(this.value)" type="text"-->
+<!--                                    class="form-control" placeholder="Tìm kiếm">-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-1">-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
 
-                    </div>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-borderless  table-scroll">
-                        <thead class="thead-light">
-                            <tr class="ml-3">
-                                <th scope="col"></th>
-                                <th ng-repeat="c in db.categories" scope="col">{{c.name}}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="body-half-screen">
-                            <tr ng-repeat="p in db.products" class="tooltip-test" title="{{p.name}}">
-                                <th>{{p.name}}</th>
-                                <th class="text-center" ng-repeat="c in db.categories">
-                                    <input ng-checked="indexOf(p.id, c.id) >= 0" type="checkbox"
-                                        ng-click="updateProductCates(p.id, c.id)">
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
+<!--                    </div>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="table-responsive">-->
+<!--                    <table class="table table-hover table-borderless  table-scroll">-->
+<!--                        <thead class="thead-light">-->
+<!--                            <tr class="ml-3">-->
+<!--                                <th scope="col"></th>-->
+<!--                                <th ng-repeat="c in db.categories" scope="col">{{c.name}}</th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody class="body-half-screen">-->
+<!--                            <tr ng-repeat="p in db.products" class="tooltip-test" title="{{p.name}}">-->
+<!--                                <th>{{p.name}}</th>-->
+<!--                                <th class="text-center" ng-repeat="c in db.categories">-->
+<!--                                    <input ng-checked="indexOf(p.id, c.id) >= 0" type="checkbox"-->
+<!--                                        ng-click="updateProductCates(p.id, c.id)">-->
+<!--                                </th>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
 
-                </div>
-            </div>
-            <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
-        </div>
-    </div>
-</div>
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; <div class="modal-footer">-->
+<!--          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--          <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--        </div> &ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

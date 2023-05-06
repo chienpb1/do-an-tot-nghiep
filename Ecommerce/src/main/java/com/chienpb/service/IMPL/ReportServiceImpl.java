@@ -1,5 +1,6 @@
 package com.chienpb.service.IMPL;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class ReportServiceImpl implements ReportService{
 	@Autowired ReportProductRepo rprRepo;
 	@Override
 	public List<ReportCost> reportCostInMonth(Integer month) {
-		List<ReportCost> lst = rpcRepo.reportCost(month);
+//		List<ReportCost> lst = rpcRepo.reportCost(month);
+		List<ReportCost> lst = new ArrayList<>();
 		return lst;
 	}
 	@Override

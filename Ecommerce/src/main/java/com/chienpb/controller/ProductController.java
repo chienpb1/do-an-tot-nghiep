@@ -100,11 +100,14 @@ public class ProductController {
 		model.addAttribute("product", map);
 		
 		Product product = (Product) map.get("product");
-		List<ProductCategory> productCates = product.getProductCategories();
+		List<ProductCategory> productCates = new ArrayList<>();
+
 		List<String> categories = new ArrayList<String>();
-		for (ProductCategory productCate : productCates){
-			categories.add(productCate.getCategory().getId());
-		}
+		categories.add(product.getCategory().getId());
+		System.out.println(product.getCategory().getId() + " iD");
+//		for (ProductCategory productCate : productCates){
+//			categories.add(productCate.getCategory().getId());
+//		}
 		Optional<Integer> p = Optional.of(0);
 		Page<Product> pageProduct = pService.findProductByListCategory(categories, p);
 		List<Map<String, Object>> products = pService.listProductSearch(pageProduct);

@@ -53,6 +53,7 @@ public class HomeController {
 	public String register(	@ModelAttribute Account account) {
 		return "register";
 	}
+
 	@PostMapping("/register")
 	public String signup(Model model,
 			@ModelAttribute Account account) {
@@ -61,9 +62,7 @@ public class HomeController {
 			return "register";
 		}else {
 			account.setActivated(true);
-			
 			account.setPhoto("logo.jpg");
-			
 			Role r = new Role();
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = passwordEncoder.encode(account.getPassword());
@@ -89,18 +88,17 @@ public class HomeController {
 		model.addAttribute("message", message);
 		return "login";
 	}
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
     public String currentUserName( 
 			Model model,Authentication authentication) {
 		model.addAttribute("db", pService.findProductByCreateDateDESC());
-		
-		
-		
 		try {
 			Account account = aService.findByUsername(authentication.getName());
-			
-			if(account ==null) {
-				
+			System.out.println(authentication + " ACCOUNT");
+			if(account == null) {
+				model.addAttribute("message", "Tên đăng nhập hoặc mật khẩu không đúng ");
+				return "login";
 			}else {
 				String uri = session.get("security-uri");
 //				if(uri != null) {
@@ -112,7 +110,6 @@ public class HomeController {
 						session.set("userAdmin", "admin");
 					}
 					model.addAttribute("message", "Login success");
-					
 //				}
 			}
 		} catch (Exception e) {
@@ -122,36 +119,7 @@ public class HomeController {
 		return "home/index";
 			
     }
-	/**
-	@PostMapping("/login")
-	public String login(@RequestParam("username") String username,
-			@RequestParam("password") String password, 
-			Model model,Authentication authentication) {
-		try {
-			Account account = aService.findByUsername(username);
-			if(!account.getPassword().equals(password)) {
-				model.addAttribute("message", "Invalid password");
-			}else {
-				String uri = session.get("security-uri");
-//				if(uri != null) {
-//					return "redirect:"+uri;
-//				}
-//				else {
-					session.set("user", account);
-					if(this.checkAdmin(account)) {
-						session.set("userAdmin", "admin");
-					}
-					model.addAttribute("message", "Login success");
-					return "redirect:/";
-//				}
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			model.addAttribute("message", "Invalid username");
-		}
-		return "login";
-	}
-	*/
+
 
 	public Boolean checkAdmin(Account account) {
 		for(RoleDetail roleDetail : account.getRoleDetails()) {

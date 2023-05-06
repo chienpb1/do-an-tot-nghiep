@@ -25,7 +25,7 @@
                                                     <a ng-click="cart.minus(i.id)" class="qtyBtn minus" href=""><i
                                                             class="fa anm anm-minus-r" aria-hidden="true"></i></a>
                                                     <input ng-change="cart.saveToLocalStorage()" ng-model="i.qty" type="number" id="Quantity" name="quantity" 
-                                                        class="product-form__input qty">
+                                                        class="product-form__input qty" style="width: 48px">
                                                     <a ng-click="cart.add(i.id)" class="qtyBtn plus" href=""><i
                                                             class="fa anm anm-plus-r" aria-hidden="true"></i></a>
                                                 </div>

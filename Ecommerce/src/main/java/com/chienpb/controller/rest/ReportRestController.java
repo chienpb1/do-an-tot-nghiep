@@ -1,9 +1,6 @@
 package com.chienpb.controller.rest;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,7 +49,8 @@ public class ReportRestController {
 	}
 	@GetMapping("/reportcost")
 	public List<ReportCost> reportCostInMonth(){
-		List<ReportCost> lst = rpService.reportCostInMonth(this.monthCurrent());
+//		List<ReportCost> lst = rpService.reportCostInMonth(this.monthCurrent());
+		List<ReportCost> lst = new ArrayList<>();
 		return lst;
 	}
 	@GetMapping("/bestSellerInMonth")

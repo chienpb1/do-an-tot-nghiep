@@ -20,6 +20,8 @@ public interface ProductService {
 
 	List<Product> findByName(String string);
 
+	List<Product> doSearch(String keyword);
+
 	Product save(Product product);
 
 	void deleteById(Long id);
@@ -27,6 +29,7 @@ public interface ProductService {
 	List<ProductCategory> findProductCategory();
 	
 	List<ProductCategory> findByProductId(Long id);
+
 
 	Product save(JsonNode data);
 

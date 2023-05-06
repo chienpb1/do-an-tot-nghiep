@@ -79,6 +79,7 @@
     <script src="/admin/assets/js/app.js"></script>
     <script src="/admin/assets/js/ctrl/admin-app.js"></script>
     <script src="/admin/assets/js/ctrl/brand-ctrl.js"></script>
+    <script src="/admin/assets/js/ctrl/order-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/category-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/product-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/user-ctrl.js"></script>

@@ -18,7 +18,6 @@
                                 <ul aria-expanded="false">
                                     <li><a href='#!user'><i class="fa-solid fa-file-pen"></i><span class="nav-title">Quản lý người dùng</span></a>  </li>
                                     <li><a href='#!authenticate'><i class="fa-solid fa-lock"></i><span class="nav-title">Phân quyền</span></a>  </li>
-                                    
                                 </ul>
                             </li>
                         </ul>

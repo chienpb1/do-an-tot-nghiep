@@ -13,6 +13,10 @@ app.config(function($routeProvider){
             templateUrl:"/admin/assets/layout/product.html",
             controller:"product-ctrl"
         })
+        .when("/order",{
+            templateUrl:"/admin/assets/layout/order.html",
+            controller:"order-ctrl"
+        })
         .when("/user",{
             templateUrl:"/admin/assets/layout/user.html",
             controller:"user-ctrl"

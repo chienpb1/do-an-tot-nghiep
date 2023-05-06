@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService{
 
 	@Override
 	public Account findByUsername(String username) {
-		return aRepo.findById(username).get();
+		return aRepo.findById(username).orElse(null);
 	}
 
 	@Override

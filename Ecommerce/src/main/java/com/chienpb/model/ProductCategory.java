@@ -23,9 +23,11 @@ public class ProductCategory implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@ManyToOne
 	@JoinColumn(name = "productid")
 	private Product product;
+
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
 	private Category category;

@@ -54,7 +54,7 @@
 					<div
 						class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
 						<div class="mb-4">
-							<form  method="post" action="/login"
+							<form method="post" action="/login"
 								id="CustomerLoginForm" accept-charset="UTF-8"
 								class="contact-form">
 								<!--<div role="alert">Bad credentials</div>-->
@@ -93,8 +93,8 @@
 									<div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
 										<input type="submit" class="btn mb-3" value="Đăng nhập">
 										<p class="mb-4">
-											<a href="forgot-password" id="RecoverPassword">Quên mật khẩu?</a> &nbsp; |
-											&nbsp; <a href="register" id="customer_register_link">Tạo
+											<a href="/forgot-password" id="RecoverPassword">Quên mật khẩu?</a> &nbsp; |
+											&nbsp; <a href="/register" id="customer_register_link">Tạo
 												tài khoản?</a>
 										</p>
 									</div>
