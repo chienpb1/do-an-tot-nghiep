@@ -113,26 +113,6 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="mr-2">Trạng thái</label>
-                                                <div class="form-check-inline">
-                                                    <input ng-model="product.available" class="form-check-input"
-                                                        type="radio" name="available" id="gridRadios1" ng-value="true"
-                                                        ng-checked="product.available">
-                                                    <label class="form-check-label" for="gridRadios1">
-                                                        Active
-                                                    </label>
-                                                </div>
-                                                <div class="form-check-inline">
-                                                    <input ng-model="product.available" class="form-check-input"
-                                                        type="radio" name="available" id="gridRadios2" ng-value="false"
-                                                        ng-checked="product.available">
-                                                    <label class="form-check-label" for="gridRadios2">
-                                                        Non active
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
                                                 <label>Ảnh sản phẩm</label>
                                                 <input type="file" accept="image/*" multiple
                                                     onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -178,6 +158,11 @@
                             </form>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            Tổng: {{totalRecords}} bản ghi
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -192,7 +177,6 @@
                                 <th scope="col">Số lượng trong kho</th>
                                 <th scope="col">Thương hiệu</th>
                                 <th scope="col">Danh mục</th>
-                                <th scope="col">Trạng thái</th>
                                 <th scope="col">Ngày tạo</th>
                                 <th scope="col">Ngày cập nhật</th>
                                 <th scope="col"></th>
@@ -200,14 +184,13 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="p in db.products | orderBy: p.id | limitTo : pageSize : start">
-                                <th scope="row">{{p.id}}</th>
+                                <td>{{$index+1+start}}</td>
                                 <td>{{p.name}}</td>
                                 <td>{{p.description}}</td>
-                                <td>{{p.price | number:0}}</td>
+                                <td>{{p.price | customNumber}}</td>
                                 <td>{{p.unitsInStock}}</td>
                                 <td>{{brandName(p.brand.id)}}</td>
                                 <td>{{categoryName(p.category.id)}}</td>
-                                <td>{{p.available?'Active':'Non active'}}</td>
                                 <td>{{p.createDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                 <td>{{p.updateDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                 <td class="text-right">
@@ -220,12 +203,12 @@
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-3 justify-content-center">
-                        <li  ng-click="first()" class="page-item "><a class="page-link" href="">First</a></li>
+                        <li  ng-click="first()" class="page-item "><a class="page-link" href=""> << </a></li>
                         <li  ng-click="prev()"  class="page-item ">
-                            <a class="page-link" href="">Previous</a>
+                            <a class="page-link" href=""> < </a>
                         </li>
-                        <li  ng-click="next()"  class="page-item"><a class="page-link" href="">Next</a></li>
-                        <li  ng-click="last()"  class="page-item"><a class="page-link" href="">Last</a></li>
+                        <li  ng-click="next()"  class="page-item"><a class="page-link" href=""> > </a></li>
+                        <li  ng-click="last()"  class="page-item"><a class="page-link" href=""> >> </a></li>
                     </ul>
                 </nav>
             </div>

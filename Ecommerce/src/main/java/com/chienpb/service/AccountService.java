@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.chienpb.model.Account;
 import com.chienpb.model.Role;
-import com.chienpb.model.RoleDetail;
 
 public interface AccountService {
 
@@ -18,19 +17,23 @@ public interface AccountService {
 
 	boolean existsById(String username);
 
+	boolean existsByEmail(String email);
+
+	boolean existsByPhoneNumber(String phoneNumber);
+
 	List<Account> findByFullname(String fullname);
 
 	List<Role> findAllRole();
 
-	List<RoleDetail> findAllAuthorities();
+//	List<RoleDetail> findAllAuthorities();
 
-	RoleDetail saveRoleDetail(RoleDetail authority);
+//	RoleDetail saveRoleDetail(RoleDetail authority);
 
-	void deleteRoleDetail(Long id);
+//	void deleteRoleDetail(Long id);
 
 	List<Account> findByUsernameLike(String username);
 
 	Long countCustomer(String role);
 	
-
+	String generatePassword();
 }

@@ -10,11 +10,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,7 +25,10 @@ public class Role implements Serializable{
 
 	private String description;
 
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "role")
+//	private List<RoleDetail> roleDetails;
 	@JsonIgnore
 	@OneToMany(mappedBy = "role")
-	private List<RoleDetail> roleDetails;
+	private List<Account> accounts;
 }

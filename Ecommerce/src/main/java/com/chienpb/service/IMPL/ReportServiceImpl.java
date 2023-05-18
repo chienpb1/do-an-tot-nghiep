@@ -18,9 +18,7 @@ public class ReportServiceImpl implements ReportService{
 	@Autowired ReportProductRepo rprRepo;
 	@Override
 	public List<ReportCost> reportCostInMonth(Integer month) {
-//		List<ReportCost> lst = rpcRepo.reportCost(month);
-		List<ReportCost> lst = new ArrayList<>();
-		return lst;
+		return rpcRepo.reportCost(month);
 	}
 	@Override
 	public List<ReportProduct> reportProductInMonth(Integer month) {

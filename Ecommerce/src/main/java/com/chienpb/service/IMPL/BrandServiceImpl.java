@@ -17,8 +17,8 @@ public class BrandServiceImpl implements BrandService{
 
 	@Override
 	public List<Brand> findAll() {
-		Sort sort = Sort.by(Direction.ASC, "name");
-		return bRepo.findAll(sort);
+//		Sort sort = Sort.by(Direction.ASC, "name");
+		return bRepo.getAllBrand();
 	}
 
 	@Override
@@ -46,5 +46,10 @@ public class BrandServiceImpl implements BrandService{
 		System.out.println(kw);
 		return bRepo.findByName(kw);
 	}
-	
+
+	@Override
+	public List<Brand> findAllBrandAndKhac() {
+		return bRepo.getAllBrandAndKhac();
+	}
+
 }

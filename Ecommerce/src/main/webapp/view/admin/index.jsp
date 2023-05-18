@@ -5,7 +5,7 @@
 
 
 <head>
-    <title>Admin</title>
+    <title>Quản trị hệ thống</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
@@ -18,6 +18,7 @@
     <!-- plugin stylesheets -->
     <link rel="stylesheet" type="text/css" href="/admin/assets/css/vendors.css" />
     <!-- app style -->
+
     <link rel="stylesheet" type="text/css" href="/admin/assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/admin/assets/css/custom.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
@@ -82,9 +83,22 @@
     <script src="/admin/assets/js/ctrl/order-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/category-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/product-ctrl.js"></script>
+    <script src="/admin/assets/js/ctrl/log-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/user-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/authenticate-ctrl.js"></script>
     <script src="/admin/assets/js/ctrl/dashboard-ctrl.js"></script>
+<%--    <script type="text/ng-template" id="confirmDelete.html">--%>
+<%--        <div class="modal-header">--%>
+<%--            <h3 class="modal-title">Delete User</h3>--%>
+<%--        </div>--%>
+<%--        <div class="modal-body">--%>
+<%--            <p>Are you sure you want to delete {{user.name}}?</p>--%>
+<%--        </div>--%>
+<%--        <div class="modal-footer">--%>
+<%--            <button class="btn btn-primary" ng-click="ok()">Delete</button>--%>
+<%--            <button class="btn btn-default" ng-click="cancel()">Cancel</button>--%>
+<%--        </div>--%>
+<%--    </script>--%>
 </body>
 
 

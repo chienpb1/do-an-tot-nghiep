@@ -1,6 +1,7 @@
 package com.chienpb.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,7 @@ public class OrderController {
 			db.add(map);
 		}
 		model.addAttribute("orders", db);
+		model.addAttribute("localDateTimeFormat", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss"));
 		return "order/list";
 	}
 	@RequestMapping("/cart")
@@ -70,6 +72,9 @@ public class OrderController {
 			@PathVariable("id") Long id) {
 		Order order = oService.findById(id);
 		Account account = session.get("user");
+//		if(account == null){
+//			account = aService.findByUsername("guest");
+//		}
 		String acc = account.getUsername();
 		if(!order.getAccount().getUsername().equals(acc)) {
 			return "redirect:/login?message=Access%20Denied";

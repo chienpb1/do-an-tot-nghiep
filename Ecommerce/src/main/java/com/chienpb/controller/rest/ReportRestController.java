@@ -38,19 +38,23 @@ public class ReportRestController {
 		List<Order> orders = oService.findOrderInMonth(month);
 		Double totalCost = 0.0;
 		for(Order order : orders ) {
-			List<OrderDetail> orderDetail = order.getOrderDetails();
-			for(OrderDetail od : orderDetail) {
-				totalCost += od.getPrice() * od.getQuantity();
+			if(order.getStatus() == 2){
+				List<OrderDetail> orderDetail = order.getOrderDetails();
+				for(OrderDetail od : orderDetail) {
+					totalCost += od.getPrice() * od.getQuantity();
+				}
 			}
 		}
 		db.put("totalCost", totalCost);
 		db.put("totalOrder", oService.countOrderInMonth(month));
+		db.put("orderWaiting", oService.countOrderWaitingInMonth(month));
+		db.put("orderSuccess", oService.countOrderSuccessInMonth(month));
+		db.put("orderCancel", oService.countOrderCancelInMonth(month));
 		return db;
 	}
 	@GetMapping("/reportcost")
 	public List<ReportCost> reportCostInMonth(){
-//		List<ReportCost> lst = rpService.reportCostInMonth(this.monthCurrent());
-		List<ReportCost> lst = new ArrayList<>();
+		List<ReportCost> lst = rpService.reportCostInMonth(this.monthCurrent());
 		return lst;
 	}
 	@GetMapping("/bestSellerInMonth")

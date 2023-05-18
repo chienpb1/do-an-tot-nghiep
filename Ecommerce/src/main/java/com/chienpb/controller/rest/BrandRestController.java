@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import com.chienpb.model.Account;
 import com.chienpb.model.ImpactLog;
-import com.chienpb.service.ImpactLogService;
-import com.chienpb.service.SessionService;
+import com.chienpb.model.Product;
+import com.chienpb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chienpb.model.Brand;
-import com.chienpb.service.BrandService;
-import com.chienpb.service.UploadService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -34,15 +32,14 @@ public class BrandRestController {
 	BrandService bService;
 	@Autowired
 	UploadService uService;
-
 	@Autowired
 	SessionService session;
-
 	@Autowired
 	ImpactLogService iService;
+	@Autowired
+	ProductService pService;
 
 	@GetMapping("")
-//	@ResponseBody
 	public List<Brand> getAllBrand() {
 		return bService.findAll();
 	}
@@ -61,7 +58,7 @@ public class BrandRestController {
 		if(keyword != null) {
 			return bService.findByName("%"+keyword+"%");
 		}else {
-			return this.getAllBrand();
+			return bService.findAllBrandAndKhac();
 		}
 	}
 	@PostMapping("")
@@ -69,6 +66,7 @@ public class BrandRestController {
 		if(bService.existsById(brand.getId())) {
 			return ResponseEntity.badRequest().build();
 		}else {
+			brand.setAvailable(Boolean.TRUE);
 			brand.setCreateDate(LocalDateTime.now());
 			bService.save(brand);
 			Account account = session.get("user");
@@ -103,12 +101,19 @@ public class BrandRestController {
 			return ResponseEntity.notFound().build();
 		}else {
 			Brand brand = bService.findById(id);
-			String filename = brand.getImage();
-			System.out.println(filename);
-			if(!filename.equalsIgnoreCase("logo.jpg")) {
-				uService.delete("brand", filename);
+			Brand brandKhac = bService.findById("KHAC");
+			brand.setAvailable(false);
+			bService.save(brand);
+			List<Product> productsByBrand = pService.findByBrandId(id);
+			for (Product product : productsByBrand){
+				product.setBrand(brandKhac);
+				pService.save(product);
 			}
-			bService.deleteById(id);
+//			String filename = brand.getImage();
+//			if(!filename.equalsIgnoreCase("logo.jpg")) {
+//				uService.delete("brand", filename);
+//			}
+//			bService.deleteById(id);
 			Account account = session.get("user");
 			ImpactLog impactLog = new ImpactLog();
 			impactLog.setUsername(account.getUsername());

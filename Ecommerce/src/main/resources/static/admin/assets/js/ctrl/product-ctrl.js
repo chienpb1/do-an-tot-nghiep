@@ -1,7 +1,25 @@
 let urlProduct = "/admin/rest/products";
+app.filter('customNumber', function () {
+    return function (input) {
+        // Chuyển đổi giá trị sang kiểu số
+        var value = parseFloat(input);
+
+        // Kiểm tra nếu giá trị là số và không phải là NaN
+        if (!isNaN(value)) {
+            // Định dạng giá trị với dấu chấm phân cách hàng nghìn
+            var formattedValue = value.toLocaleString('vi-VN', { maximumFractionDigits: 0 });
+
+            return formattedValue;
+        }
+
+        // Trả về giá trị gốc nếu không thể định dạng
+        return input;
+    };
+});
 app.controller("product-ctrl", function ($scope, $http) {
     $scope.product = {};  //product items
     $scope.db = []; //list all product
+
     $scope.pageSize = 10;
     $scope.listCategoryActive = [];
 
@@ -11,7 +29,7 @@ app.controller("product-ctrl", function ($scope, $http) {
         $http.get(urlProduct).then(resp => {
             $scope.db = resp.data;
             $scope.listCategoryActive =  $scope.db.categories.filter(c => c.available === true).map(c => c);
-
+            $scope.totalRecords = $scope.db.products.length;
         }).catch(error => {
             alert("Load data fail");
         });
@@ -84,7 +102,7 @@ app.controller("product-ctrl", function ($scope, $http) {
                 description: product.description,
                 price: +product.price,
                 unitsInStock: product.unitsInStock,
-                available: product.available,
+                available: true,
                 brand: {
                     id: product.brand.id,
                 },
@@ -97,7 +115,8 @@ app.controller("product-ctrl", function ($scope, $http) {
         $http.post(urlProduct, data).then(resp => {
             resp.data.images = JSON.parse(resp.data.images);
             $scope.db.products.push(resp.data);
-            alert("Add Product Success")
+            $scope.init();
+            alert("Thêm mới sản phẩm thành công")
             $scope.reset();
         }).catch(error => {
             alert("Add Product Fail");
@@ -128,7 +147,8 @@ app.controller("product-ctrl", function ($scope, $http) {
             resp.data.images = JSON.parse(resp.data.images);
             var index = $scope.db.products.findIndex(p => p.id == resp.data.id);
             $scope.db.products[index] = resp.data;
-            alert("Update Product Success")
+            alert("Cập nhật sản phẩm thành công")
+            $scope.init();
         }).catch(error => {
             alert("Update Product Fail");
             console.log(error)
@@ -137,15 +157,16 @@ app.controller("product-ctrl", function ($scope, $http) {
     //HAM DELETE
     $scope.delete = function (id) {
         $http.delete(`${urlProduct}/${id}`).then(resp => {
-            var index = $scope.db.products.findIndex(p => p.id == id);
-            $scope.db.products.splice(index, 1);
-            for (var i = 0; i < $scope.db.productCates.length; i++) {
-                if ($scope.db.productCates[i].product.id == id) {
-                    $scope.db.productCates.splice(i, 1);
-                }
-            }
-            alert("Delete Product Success");
+            // var index = $scope.db.products.findIndex(p => p.id == id);
+            // $scope.db.products.splice(index, 1);
+            // for (var i = 0; i < $scope.db.productCates.length; i++) {
+            //     if ($scope.db.productCates[i].product.id == id) {
+            //         $scope.db.productCates.splice(i, 1);
+            //     }
+            // }
+            alert("Xóa sản phẩm thành công");
             $scope.reset();
+            $scope.init();
         }).catch(error => {
             alert("Delete Product Fail");
             console.log(error);
@@ -159,7 +180,7 @@ app.controller("product-ctrl", function ($scope, $http) {
             price: 0,
             available: true,
             brand: { id: "BRZ" },
-            images: ["logo.jpg"],
+            images: ["logo.png"],
         }
         $scope.chon = false;
     };

@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Login</title>
+<title>Quên mật khẩu</title>
 <meta name="description" content="description">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Favicon -->
@@ -40,7 +40,7 @@
 		<!--Body Content-->
 		<div id="page-content">
 			<!--Page Title-->
-			<div class="page section-header text-center mt-5">
+			<div class="page section-header text-center" style="margin-top: 5rem!important">
 				<div class="page-title">
 					<div class="wrapper">
 						<h1 class="page-width">Quên mật khẩu</h1>

@@ -3,10 +3,41 @@ app.controller("category-ctrl", function ($scope, $http) {
     $scope.cates = [];
     $scope.cate = {};
     $scope.chon = false;
+    $scope.pageSize = 10;
     //get danh sach Category
-    $http.get(urlCategory).then(resp => {
-        $scope.cates = resp.data;
-    });
+    $scope.init = function (){
+        $http.get(urlCategory).then(resp => {
+            $scope.cates = resp.data;
+            $scope.totalRecords = $scope.cates.length;
+        });
+        $scope.start = 0;
+
+    }
+
+    $scope.init();
+
+
+    $scope.next = function(){
+        if($scope.start < $scope.cates.length - $scope.pageSize){
+            $scope.start += $scope.pageSize;
+        }
+    }
+    $scope.prev = function(){
+        if($scope.start > 0){
+            $scope.start -= $scope.pageSize;
+        }
+    }
+    $scope.last = function(){
+        var sotrang = Math.ceil($scope.cates.length / $scope.pageSize);
+        $scope.start = (sotrang - 1) * $scope.pageSize;
+    }
+    $scope.first = function(){
+        $scope.start = 0;
+    }
+
+    //HAM KHOI DAU
+
+
     //get 1 Category
     $scope.edit = function (id) {
         var url = `${urlCategory}/${id}`;

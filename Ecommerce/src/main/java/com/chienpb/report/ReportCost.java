@@ -1,6 +1,7 @@
 package com.chienpb.report;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class ReportCost implements Serializable{
 	@Id
-	public Date date;
+	public LocalDateTime date;
 	public Long sumOrder;
 	public Double cost;
 }

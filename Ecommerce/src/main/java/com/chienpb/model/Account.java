@@ -1,6 +1,7 @@
 package com.chienpb.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +9,10 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,6 +24,7 @@ public class Account implements Serializable{
 
 	private String password;
 
+	@Column(columnDefinition = "NVARCHAR(MAX)")
 	private String fullname;
 
 	private String email;
@@ -35,15 +36,20 @@ public class Account implements Serializable{
 
 	private Boolean activated;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "createdate")
-	private Date createDate = new Date();
+//	@Temporal(TemporalType.DATE)
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
 
-	private Date updateDate;
+	@Column(name = "update_date")
+	private LocalDateTime updateDate;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-	private List<RoleDetail> roleDetails;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+//	private List<RoleDetail> roleDetails;
+
+	@ManyToOne
+	@JoinColumn(name = "role_id")
+	private Role role;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")

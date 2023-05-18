@@ -71,7 +71,7 @@ Table of Content:
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 *, ::before, ::after { box-sizing:border-box; -webkit-box-sizing:border-box; }
 html { overflow:hidden; overflow-y:auto; }
-body { font-size:13px; line-height:1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family:"Poppins",Helvetica,Tahoma,Arial,serif; color:#424242; font-weight:400; margin:0; padding:0; }
+body { font-size:14px; line-height:1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family:"Poppins",Helvetica,Tahoma,Arial,serif; color:#424242; font-weight:400; margin:0; padding:0; }
 article, aside, details, figcaption, figure, footer, header, nav, section, summary { display: block; }
 audio, canvas, video { display: inline-block; }
 audio:not([controls]) { display:none; height:0; }
@@ -110,7 +110,7 @@ ol, ul { padding:0; margin:0; }
 ========================================================================*/
 h1 a, .h1 a, h2 a, .h2 a, h3 a, .h3 a, h4 a, .h4 a, h5 a, .h5 a, h6 a, .h6 a { color:inherit; text-decoration:none; font-weight:inherit; }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, address, p, pre, blockquote, dl, dd, menu, ol, ul, table, caption, hr { margin:0; margin-bottom:15px; }
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { color:#000; margin:0 0 10px; font-family:"Roboto Slab",Helvetica,Tahoma,Arial,serif; font-weight:400; line-height:1.2; overflow-wrap: break-word; word-wrap: break-word; }
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { color:#000; margin:0 0 10px; font-family:"Poppins",Helvetica,Tahoma,Arial,serif; font-weight:400; line-height:1.2; overflow-wrap: break-word; word-wrap: break-word; }
 h1, .h1 { font-size:24px; }
 h2, .h2 { font-size:19px; letter-spacing:0.03em; text-transform:uppercase; }
 h3, .h3 { font-size:16px; }
@@ -479,7 +479,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder { opacity:1; -ms-fil
 .grid-view-item--sold-out .grid-view-item__image { opacity:0.5; }
 .sold-out { position:absolute; top:0; width:100%; left:0; height:100%; }
 .sold-out span { color:#000; position:absolute; top:50%; left:0; right:0; text-transform:uppercase; letter-spacing:0.08em; text-align:center; }
-.variants.add button { color:#000000; background-color:#ffffff; width:100%; text-transform:uppercase; -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; }
+.variants.add button { color:#000000; background-color:#eac55f; width:100%; text-transform:uppercase; -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; }
 .variants.add { position:absolute; bottom:-50px; -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; left:5px; right:5px; }
 .product-image:hover .variants.add { bottom:5px; }
 .button-set { position:absolute; right:5px; top:30px; opacity:0; -ms-transition:all 0.5s ease-in-out; -webkit-transition:all 0.5s ease-in-out; transition:all 0.5s ease-in-out; }
@@ -1157,6 +1157,7 @@ table { margin-bottom:15px; width:100%; border-collapse:collapse; border-spacing
 .cart_tearm label { cursor:pointer; }
 input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none; }
 #cartCheckout { width:100%; padding:15px; }
+#cartCheckout1 { width:100%; padding:15px; }
 .cart-variant1 .cart .cart__price-wrapper{ text-align:center; }
 .cart-variant1 .cart table { border:1px solid #f2f2f2; }
 .cart-variant1 .cart table td { border:1px solid #f2f2f2; }
@@ -1285,7 +1286,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 .home5-cosmetic .grid-products .slick-arrow { margin-top:-20px;}
 
 .home5-cosmetic .featured-column .btn, .home5-cosmetic .hero .btn, .home5-cosmetic .product-single .btn,
-.footer-5 .footer-newsletter .btn { background-color:#ff708e; }
+.footer-5 .footer-newsletter .btn { background-color:#eac55f; }
 
 .featured-column .text-center h3 { font-size:18px; text-transform:uppercase; }
 .featured-column .text-center .rte-setting { max-width:320px; margin:0 auto 20px; }
@@ -1661,3 +1662,9 @@ body.home15-funiture-template { font-size:14px; }
 
 .blur-up.lazyloaded { -webkit-filter:blur(0); filter:blur(0); }
 .blur-up { -webkit-filter:blur(5px); filter:blur(5px); transition:filter 400ms, -webkit-filter 400ms; -webkit-transition:filter 400ms, -webkit-filter 400ms; }
+
+
+/*.text-reset {*/
+/*	--bs-text-opacity: 1;*/
+/*	color: inherit!important;*/
+/*}*/

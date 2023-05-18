@@ -44,13 +44,18 @@
 						class="anm anm-user-al" aria-hidden="true"></i></span>
 					<ul class="customer-links list-inline">
 						<c:if test="${not empty sessionScope.user }">
-							<li><a href="#">Xin chào <security:authorize
+							<li>
+								<a href="#">Xin chào <security:authorize
 										access="isAuthenticated()">
 										<security:authentication property="principal.username" />
-									</security:authorize></a></li>
-							<li><a href="/order/list">Đơn hàng của bạn</a></li>
-							<li><a href="#">Sản phẩm yêu thích</a></li>
+									</security:authorize></a>
+							</li>
+							<c:if test="${empty sessionScope.userAdmin}">
+								<li><a href="/my-account">Tài khoản của tôi</a></li>
+								<li><a href="/order/list">Đơn hàng</a></li>
+							</c:if>
 						</c:if>
+
 						<c:if test="${empty sessionScope.user }">
 							<li><a href="/login">Đăng nhập</a></li>
 							<li><a href="/register">Tạo tài khoản</a></li>
@@ -73,7 +78,7 @@
 			<div class="row align-items-center">
 				<!--Desktop Logo-->
 				<div class="logo col-md-2 col-lg-2 d-none d-lg-block">
-					<a href="/"> <img src="/assets/images/logo.svg"
+					<a href="/"> <img src="/assets/images/logo.png"
 						alt="Belle Multipurpose Html Template" />
 					</a>
 				</div>
@@ -159,7 +164,7 @@
 				<div
 					class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
 					<div class="logo">
-						<a href="index.html"> <img src="/assets/images/logo.svg"
+						<a href="index.html"> <img src="/assets/images/logo.png"
 							alt="Belle Multipurpose Html Template"
 							title="Belle Multipurpose Html Template" />
 						</a>

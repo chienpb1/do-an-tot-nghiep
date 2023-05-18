@@ -12,7 +12,7 @@
     <meta name="description" content="description">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/worldwide.png" />
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="/assets/css/plugins.css">
     <!-- Bootstap CSS -->

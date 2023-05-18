@@ -50,6 +50,25 @@
                                      class="badge badge-danger m-2">Tên thương hiệu không được để trống
                                 </div>
                             </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="mr-2">Trạng thái</label>-->
+<!--                                <div class="form-check-inline">-->
+<!--                                    <input ng-model="brand.available" class="form-check-input"-->
+<!--                                           type="radio" name="available" id="gridRadios1" ng-value="true"-->
+<!--                                           ng-checked="brand.available">-->
+<!--                                    <label class="form-check-label" for="gridRadios1">-->
+<!--                                        Active-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                                <div class="form-check-inline">-->
+<!--                                    <input ng-model="brand.available" class="form-check-input"-->
+<!--                                           type="radio" name="available" id="gridRadios2" ng-value="false"-->
+<!--                                           ng-checked="brand.available">-->
+<!--                                    <label class="form-check-label" for="gridRadios2">-->
+<!--                                        Non active-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label>Logo</label>
                                 <input type="file" accept="image/*"
@@ -62,8 +81,8 @@
                                     ng-click="update(brand.id)" class="btn btn-info">Cập nhật
                             </button>
                             <button ng-click="reset()" class="btn btn-secondary">Nhập lại</button>
-                            <button ng-disabled="chon == false" ng-click="delete(brand.id)" class="btn btn-dark">Xóa
-                            </button>
+<!--                            <button ng-disabled="chon == false" ng-click="delete(brand.id)" class="btn btn-dark">Xóa-->
+<!--                            </button>-->
                         </form>
                     </div>
                 </div>
@@ -89,6 +108,11 @@
                             </form>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            Tổng: {{totalRecords}} bản ghi
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -106,8 +130,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="brand in brands">
-                            <th scope="row">{{$index+1}}</th>
+                        <tr ng-repeat="brand in brands | orderBy: brand.id | limitTo : pageSize : start">
+                            <td>{{$index+1+start}}</td>
                             <td>{{brand.id}}</td>
                             <td>{{brand.name}}</td>
                             <td>{{brand.image}}</td>
@@ -115,14 +139,45 @@
                             <td>{{brand.updateDate | date:'dd-MM-yyyy HH:mm:ss' }}</td>
                             <td class="text-right">
                                 <button ng-click="edit(brand.id)" class="btn btn-primary">Sửa</button>
-                                <button ng-click="delete(brand.id)" class="btn btn-dark">Xóa</button>
-
+                                <button data-toggle="modal" data-target="#myModal" ng-click="handleButtonClick(brand.id)" class="btn btn-dark">Xóa</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-3 justify-content-center">
+                        <li  ng-click="first()" class="page-item "><a class="page-link" href=""> << </a></li>
+                        <li  ng-click="prev()"  class="page-item ">
+                            <a class="page-link" href=""> < </a>
+                        </li>
+                        <li  ng-click="next()"  class="page-item"><a class="page-link" href=""> > </a></li>
+                        <li  ng-click="last()"  class="page-item"><a class="page-link" href=""> >> </a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color: red; font-weight: bold">
+                Bạn có chắc chắn muốn xóa thương hiệu này?
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn-brand" type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button ng-click="delete()" type="button" class="btn btn-primary">Đồng ý</button>
             </div>
         </div>
     </div>
 </div>
+

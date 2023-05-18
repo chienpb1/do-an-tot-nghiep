@@ -4,12 +4,10 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<!-- belle/home5-cosmetic.html   11 Nov 2019 12:25:38 GMT -->
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Login</title>
+<title>Đăng nhập</title>
 <meta name="description" content="description">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Favicon -->
@@ -40,7 +38,7 @@
 		<!--Body Content-->
 		<div id="page-content">
 			<!--Page Title-->
-			<div class="page section-header text-center mt-5">
+			<div class="page section-header text-center " style="margin-top: 5rem!important">
 				<div class="page-title">
 					<div class="wrapper">
 						<h1 class="page-width">Đăng nhập</h1>
@@ -75,16 +73,19 @@
 												id="CustomerPassword" class="">
 										</div>
 									</div>
-									<div class="col-12 col-sm-12 col-md-12 col-lg-12">
-										<div class="form-group">
-											<label>Ghi nhớ</label> <input type="checkbox"
-												name="remember-me">
-										</div>
-									</div>
+<%--									<div class="col-12 col-sm-12 col-md-12 col-lg-12">--%>
+<%--										<div class="form-group">--%>
+<%--											<label>Ghi nhớ</label> <input type="checkbox"--%>
+<%--												name="remember-me">--%>
+<%--										</div>--%>
+<%--									</div>--%>
 									<div class="col-12 col-sm-12 col-md-12 col-lg-12">
 										<div class="form-group">
 											<c:if test="${not empty message }">
 												<i style="color: red; font-weight: bold">${message}</i>
+											</c:if>
+											<c:if test="${param.error != null}">
+												<div class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không đúng, vui lòng thử lại!</div>
 											</c:if>
 										</div>
 									</div>

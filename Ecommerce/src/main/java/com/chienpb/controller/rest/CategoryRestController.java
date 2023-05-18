@@ -7,6 +7,10 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.chienpb.model.Account;
+import com.chienpb.model.ImpactLog;
+import com.chienpb.service.ImpactLogService;
+import com.chienpb.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +36,10 @@ public class CategoryRestController {
 	CategoryService cService;
 	@Autowired
 	UploadService uService;
+	@Autowired
+	SessionService session;
+	@Autowired
+	ImpactLogService iService;
 
 	@GetMapping("")
 	public List<Category> getAllCategory() {
@@ -61,6 +69,13 @@ public class CategoryRestController {
 			return ResponseEntity.badRequest().build();
 		}else {
 			cate.setUpdateDate(LocalDateTime.now());
+			cate.setAvailable(true);
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Thêm danh mục sản phẩm bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
 			return ResponseEntity.ok(cService.save(cate));
 		}
 	}
@@ -72,6 +87,12 @@ public class CategoryRestController {
 			return ResponseEntity.notFound().build();
 		}else {
 			cate.setUpdateDate(LocalDateTime.now());
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Cập nhật danh mục sản phẩm bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
 			return ResponseEntity.ok(cService.save(cate));
 		}
 	}
@@ -81,6 +102,12 @@ public class CategoryRestController {
 			return ResponseEntity.notFound().build();
 		}else {
 			cService.deleteById(id);
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Xóa danh mục sản phẩm bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
 			return ResponseEntity.ok().build();
 		}
 	}

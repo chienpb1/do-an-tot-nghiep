@@ -18,5 +18,5 @@ public class OrderDTO implements Serializable {
     private String username;
     private String address;
     private Double total;
-
+    private Integer status;
 }

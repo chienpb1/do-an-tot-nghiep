@@ -2,6 +2,23 @@ const numberFormat = new Intl.NumberFormat('vi-VN', {
   style: 'currency',
   currency: 'VND',
 });
+app.filter('customNumber', function () {
+  return function (input) {
+    // Chuyển đổi giá trị sang kiểu số
+    var value = parseFloat(input);
+
+    // Kiểm tra nếu giá trị là số và không phải là NaN
+    if (!isNaN(value)) {
+      // Định dạng giá trị với dấu chấm phân cách hàng nghìn
+      var formattedValue = value.toLocaleString('vi-VN', { maximumFractionDigits: 0 });
+
+      return formattedValue;
+    }
+
+    // Trả về giá trị gốc nếu không thể định dạng
+    return input;
+  };
+});
 app.controller("dashboard-ctrl", function ($scope, $http) {
   $scope.total = [];
   $scope.costInMonth = [];
@@ -28,8 +45,8 @@ app.controller("dashboard-ctrl", function ($scope, $http) {
       $scope.costData.push($scope.costInMonth[i].cost);
       $scope.orderData.push($scope.costInMonth[i].sumOrder);
       if($scope.costInMonth[i].date.getDate() == (new Date()).getDate()){
-        $scope.costToday = $scope.costInMonth[i].cost;
-        $scope.orderToday = $scope.costInMonth[i].sumOrder;
+        $scope.costToday = $scope.costToday + $scope.costInMonth[i].cost;
+        $scope.orderToday = $scope.orderToday + $scope.costInMonth[i].sumOrder;
       }else{
         $scope.costToday = 0;
         $scope.orderToday = 0;
@@ -43,20 +60,27 @@ app.controller("dashboard-ctrl", function ($scope, $http) {
 
   $http.get('/admin/rest/report/bestSellerInMonth').then(resp => {
     $scope.productInMonth = resp.data;
-    for(var i = 0; i < 5; i++){
+    var qty = 0;
+    if($scope.productInMonth.length > 5){
+      qty = 5;
+    } else {
+      qty = $scope.productInMonth.length;
+    }
+    for(var i = 0; i < qty; i++){
       $scope.productName.push($scope.productInMonth[i].name);
       $scope.productCount.push($scope.productInMonth[i].count);
     }
   });
 
   $scope.reportCost = function () {
-    let date = (new Date()).toLocaleString('default', { month: 'short' });
-
+    // let date = (new Date()).toLocaleString('default', { month: 'short' });
+    let options = { month: 'long' };
+    let date = (new Date()).toLocaleString('vi-VN', options);
     const data = {
       labels: $scope.costDate,
       datasets: [
         {
-        label: 'Cost in '+date,
+        label: 'Doanh thu ',
         data: $scope.costData,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
@@ -105,6 +129,7 @@ app.controller("dashboard-ctrl", function ($scope, $http) {
     );
   }
   $scope.reportProduct();
-   $scope.reportCost();
+  $scope.reportCost();
+
 });
 

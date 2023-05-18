@@ -45,25 +45,25 @@
                                 </div>
                                 <!--                                <div ng-show="frmCategory.name.$invalid" class="badge badge-danger m-2">Id not null</div>-->
                             </div>
-                            <div class="form-group">
-                                <label class="mr-2">Trạng thái</label>
-                                <div class="form-check-inline">
-                                    <input ng-model="cate.available" class="form-check-input"
-                                           type="radio" name="available" id="gridRadios1" ng-value="true"
-                                           ng-checked="cate.available">
-                                    <label class="form-check-label" for="gridRadios1">
-                                        Active
-                                    </label>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input ng-model="cate.available" class="form-check-input"
-                                           type="radio" name="available" id="gridRadios2" ng-value="false"
-                                           ng-checked="cate.available">
-                                    <label class="form-check-label" for="gridRadios2">
-                                        Non active
-                                    </label>
-                                </div>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="mr-2">Trạng thái</label>-->
+<!--                                <div class="form-check-inline">-->
+<!--                                    <input ng-model="cate.available" class="form-check-input"-->
+<!--                                           type="radio" name="available" id="gridRadios1" ng-value="true"-->
+<!--                                           ng-checked="cate.available">-->
+<!--                                    <label class="form-check-label" for="gridRadios1">-->
+<!--                                        Active-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                                <div class="form-check-inline">-->
+<!--                                    <input ng-model="cate.available" class="form-check-input"-->
+<!--                                           type="radio" name="available" id="gridRadios2" ng-value="false"-->
+<!--                                           ng-checked="cate.available">-->
+<!--                                    <label class="form-check-label" for="gridRadios2">-->
+<!--                                        Non active-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <button ng-disabled="frmCategory.$invalid || chon == true" ng-click="create()"
                                     class="btn btn-primary">Thêm mới
                             </button>
@@ -89,6 +89,7 @@
                         <div class="col-md-6 text-left">
                             <h4 class="card-title">Danh sách danh mục sản phẩm</h4>
                         </div>
+
                         <div class="col-md-6">
                             <form class="justify-content-end">
                                 <div class="form-group">
@@ -96,6 +97,11 @@
                                            class="form-control" placeholder="Tìm kiếm">
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            Tổng: {{totalRecords}} bản ghi
                         </div>
                     </div>
                 </div>
@@ -115,8 +121,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="c in cates">
-                            <th scope="row">{{$index +1}}</th>
+                        <tr ng-repeat="c in cates | orderBy: c.id | limitTo : pageSize : start">
+                            <td>{{$index +1+start}}</td>
                             <td>{{c.id}}</td>
                             <td>{{c.name}}</td>
                             <td>{{c.available ? 'Active' : 'Non active'}}</td>
@@ -130,6 +136,16 @@
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-3 justify-content-center">
+                        <li  ng-click="first()" class="page-item "><a class="page-link" href=""> << </a></li>
+                        <li  ng-click="prev()"  class="page-item ">
+                            <a class="page-link" href=""> < </a>
+                        </li>
+                        <li  ng-click="next()"  class="page-item"><a class="page-link" href=""> > </a></li>
+                        <li  ng-click="last()"  class="page-item"><a class="page-link" href=""> >> </a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@ public class GlobalInterceptor implements HandlerInterceptor{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		request.setAttribute("cates", cService.findAll());
-		request.setAttribute("brands", bService.findAll());
+		request.setAttribute("brands", bService.findAllBrandAndKhac());
 	}
 	
 	

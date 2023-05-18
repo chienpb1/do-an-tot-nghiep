@@ -49,7 +49,7 @@
 							src="/assets/images/cat-women2.jpg" alt="Women" title="Women" />
 					</div>
 					<div class="collection-hero__title-wrapper">
-						<h1 class="collection-hero__title page-width">LIST BRAND</h1>
+						<h1 class="collection-hero__title page-width">Thương hiệu</h1>
 					</div>
 				</div>
 			</div>
@@ -70,7 +70,7 @@
 										<a href="/product/list?bid=${b.id}"> <img
 											data-src="/images/brand/${b.image}"
 											src="/images/brand/${b.image}" alt="Heeled Boots"
-											title="Heeled Boots" class="blur-up lazyload" />
+											title="${b.name}" class="blur-up lazyload" />
 											<div class="ttl">
 												<h5>${b.name}</h5>
 											</div>

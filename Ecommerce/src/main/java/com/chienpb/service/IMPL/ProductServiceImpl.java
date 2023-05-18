@@ -25,6 +25,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static java.lang.Boolean.FALSE;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
@@ -36,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findAll() {
-		return pRepo.findAll();
+		return pRepo.getAll();
 	}
 
 	@Override
@@ -66,7 +68,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void deleteById(Long id) {
-		pRepo.deleteById(id);
+		Product product = findById(id);
+		product.setAvailable(false);
+		pRepo.save(product);
 	}
 
 	@Override
@@ -121,16 +125,17 @@ public class ProductServiceImpl implements ProductService {
 		// list du lieu tai len ui
 		List<Map<String, Object>> db = new ArrayList<Map<String, Object>>();
 		try {
-
 			for (Product p : data) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				p.getId();
-				p.getName();
-				p.getPrice();
-				images = mapper.readValue(p.getImages(), typeString);
-				map.put("product", p);
-				map.put("images", images);
-				db.add(map);
+				if(p.getAvailable()){
+					Map<String, Object> map = new HashMap<String, Object>();
+					p.getId();
+					p.getName();
+					p.getPrice();
+					images = mapper.readValue(p.getImages(), typeString);
+					map.put("product", p);
+					map.put("images", images);
+					db.add(map);
+				}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -193,7 +198,7 @@ public class ProductServiceImpl implements ProductService {
 	public Page<Product> findProductLessThanPrice(Double price, Optional<Integer> p){
 		session.set("price", price);
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
-		return pRepo.findByPriceLessThanEqual(price, pageable);
+		return pRepo.findByPriceLessThanEqualAndAvailableIsTrue(price, pageable);
 	}
 	
 	@Override
@@ -201,14 +206,14 @@ public class ProductServiceImpl implements ProductService {
 		session.set("minPrice", min);
 		session.set("maxPrice", max);
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
-		return pRepo.findByPriceBetween(min, max, pageable);
+		return pRepo.findByPriceBetweenAndAvailableIsTrue(min, max, pageable);
 	}
 	
 	@Override
 	public Page<Product> findByPriceGreaterThanEqual(Double price, Optional<Integer> p){
 		session.set("price", price);
 		Pageable pageable = PageRequest.of(p.orElse(0), 12);
-		return pRepo.findByPriceGreaterThanEqual(price, pageable);
+		return pRepo.findByPriceGreaterThanEqualAndAvailableIsTrue(price, pageable);
 	}
 	@Override
 	public List<Map<String, Object>> listProductSearch(Page<Product> lstProduct){
@@ -255,7 +260,12 @@ public class ProductServiceImpl implements ProductService {
 		Pageable page = PageRequest.of(p.orElse(0), 6);
 		return pRepo.findByListCategory(cid, page);
 	}
-	
+
+	@Override
+	public List<Product> findByBrandId(String id) {
+		return pRepo.findByBrandId(id);
+	}
+
 //	@Override
 //	public List<Map<String, Object>> findProductByKeywordAndPage(Optional<String> kw, Optional<String> cid, Optional<String> bid,
 //			Optional<Integer> p) {

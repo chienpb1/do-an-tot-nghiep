@@ -25,8 +25,14 @@ app.config(function($routeProvider){
             templateUrl:"/admin/assets/layout/authenticate.html",
             controller:"authenticate-ctrl"
         })
+        .when("/log",{
+            templateUrl:"/admin/assets/layout/log.html",
+            controller:"log-ctrl"
+        })
         .otherwise({
             templateUrl:"/admin/assets/layout/dashboard.html",
             controller:"dashboard-ctrl"
         })
 });
+
+

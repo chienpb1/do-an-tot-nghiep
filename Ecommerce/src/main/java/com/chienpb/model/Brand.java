@@ -32,6 +32,8 @@ public class Brand implements Serializable{
 
 	private LocalDateTime updateDate;
 
+	private Boolean available;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "brand")
 	private List<Product> products;

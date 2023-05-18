@@ -14,4 +14,7 @@ import com.chienpb.model.Category;
 public interface CategoryRepo extends JpaRepository<Category, String>{
 	@Query("SELECT c FROM Category c WHERE c.name LIKE :name")
 	List<Category> findByName(@Param("name") String name);
+
+	@Query("SELECT c FROM Category c WHERE c.available IS TRUE order by coalesce(c.updateDate, c.createDate) desc")
+	List<Category> getAll();
 }

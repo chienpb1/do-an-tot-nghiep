@@ -2,13 +2,14 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home</title>
+    <title>Phụ kiện điện tử</title>
     <meta name="description" content="description">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -117,25 +118,33 @@
 
                                         <!-- product price -->
                                         <div class="product-price">
-                                            <span class="price">${d.product.price}</span>
+                                            <span class="price"><fmt:formatNumber value="${d.product.price}" type="currency" currencyCode="VND" /></span>
                                         </div>
                                         <!-- End product price -->
 
                                         <!-- product button -->
                                         <div class="button-set">
                                             <!-- Start product button -->
-                                            <form class="variants add" action="#" method="post">
-                                                <button ng-click="cart.add(${d.product.id})"
-                                                        class="btn cartIcon btn-addto-cart" type="button"
-                                                        tabindex="0">
-                                                    <i class="icon anm anm-bag-l"></i>
-                                                </button>
-                                            </form>
-                                            <div class="wishlist-btn">
-                                                <a class="wishlist add-to-wishlist" href="wishlist.html">
-                                                    <i class="icon anm anm-heart-l"></i>
-                                                </a>
-                                            </div>
+                                            <c:if test="${empty sessionScope.userAdmin}">
+                                                <c:set var="qty" value="${d.product.unitsInStock}"/>
+                                                <!-- lấy giá trị của product.product.price và gán vào biến price -->
+                                                <c:if test="${qty > 0}">
+                                                    <form class="variants add" action="#" method="post">
+                                                        <button ng-click="cart.add(${d.product.id})"
+                                                                class="btn cartIcon btn-addto-cart" type="button"
+                                                                tabindex="0">
+                                                            <i class="icon anm anm-bag-l"></i>
+                                                        </button>
+                                                    </form>
+                                                </c:if>
+
+                                                <c:if test="${qty <= 0}">
+                                                    <button style="background-color: red; color: white" class="btn btn-addto-cart" type="button">Hết hàng
+                                                    </button>
+                                                </c:if>
+
+                                            </c:if>
+
                                         </div>
                                         <!-- end product button -->
                                     </div>

@@ -8,7 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Check out</title>
+    <title>Thanh toán</title>
     <meta name="description" content="description">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -40,7 +40,7 @@
     <!--Body Content-->
     <div id="page-content">
         <!--Page Title-->
-        <div class="page section-header text-center mt-5">
+        <div class="page section-header text-center" style="margin-top: 5rem!important">
             <div class="page-title">
                 <div class="wrapper">
                     <h1 class="page-width">THANH TOÁN</h1>
@@ -54,10 +54,12 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
                     <div class="customer-box returning-customer">
                         <h3>
-                            <i class="icon anm anm-user-al"></i> <a href="#customer-login"
-                                                                    id="customer"
-                                                                    class="text-white text-decoration-underline"
-                                                                    data-toggle="collapse"></a>
+                            <i class="icon anm anm-user-al"></i>
+                            <a href="#customer-login"
+                               id="customer"
+                               class="text-white text-decoration-underline"
+                               data-toggle="collapse">
+                            </a>
                         </h3>
                     </div>
                 </div>
@@ -123,7 +125,7 @@
                                     <div class="form-group col-12 required">
                                         <label for="input-firstname">Họ và tên<span
                                                 class="required-f">*</span></label>
-                                        <input disabled="disabled" name="fullname" value="${userDetail.fullname}"
+                                        <input name="fullname" value="${userDetail.fullname}"
                                                id="input-firstname" type="text">
                                     </div>
                                 </div>
@@ -132,7 +134,7 @@
                                     <div class="form-group col-12 required">
                                         <label for="input-firstname">Số điện thoại<span
                                                 class="required-f">*</span></label>
-                                        <input disabled="disabled" name="phoneNumber" value="${userDetail.phoneNumber}"
+                                        <input name="phoneNumber" value="${userDetail.phoneNumber}"
                                                id="input-phone" type="text">
                                     </div>
                                 </div>
@@ -140,7 +142,7 @@
                                 <div class="row">
                                     <div class="form-group col-12 required">
                                         <label for="input-email">E-Mail <span class="required-f">*</span></label>
-                                        <input disabled="disabled" name="email" value="${userDetail.email}"
+                                        <input name="email" value="${userDetail.email}"
                                                id="input-email" type="email">
                                     </div>
                                 </div>
@@ -155,10 +157,6 @@
                                         <div ng-show="frmOrder.address.$dirty && frmOrder.address.$error.required"
                                              class="badge badge-danger m-2">Vui lòng nhập địa chỉ
                                         </div>
-
-                                        <%--                                        <div ng-if="submited && frmOrder.address.$error.required" ng-show="frmOrder.address.$dirty && "--%>
-                                        <%--                                             class="badge badge-danger m-2">Vui lòng nhập địa chỉ--%>
-                                        <%--                                        </div>--%>
                                     </div>
                                 </div>
                             </fieldset>
@@ -166,7 +164,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12 col-lg-12 col-xl-12">
                                         <label for="note">Ghi chú</label>
-                                        <textarea name="note" class="form-control resize-both" rows="3"></textarea>
+                                        <textarea name="note" ng-model="order.note" class="form-control resize-both" rows="3"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -193,15 +191,15 @@
                                     <tbody>
                                     <tr ng-repeat="i in cart.items">
                                         <td class="text-left">{{i.name}}</td>
-                                        <td>{{i.price | number: 0}}</td>
+                                        <td>{{i.price | customNumber}}</td>
                                         <td>{{i.qty}}</td>
-                                        <td>{{cart.priceItem(i.id) | number: 0}}</td>
+                                        <td>{{cart.priceItem(i.id) | customNumber}}</td>
                                     </tr>
                                     </tbody>
                                     <tfoot class="font-weight-600">
                                     <tr>
-                                        <td colspan="4" class="text-right font-weight-bold">Tổng tiền</td>
-                                        <td class="font-weight-bold">{{cart.amount | number:0}}</td>
+                                        <td colspan="3" class="text-right font-weight-bold">Tổng tiền</td>
+                                        <td class="font-weight-bold">{{cart.amount | customNumber}}</td>
                                     </tr>
                                     </tfoot>
                                 </table>

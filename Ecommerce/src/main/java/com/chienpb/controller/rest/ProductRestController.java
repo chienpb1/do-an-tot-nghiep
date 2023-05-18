@@ -1,10 +1,14 @@
 package com.chienpb.controller.rest;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.chienpb.model.Account;
+import com.chienpb.model.ImpactLog;
+import com.chienpb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chienpb.model.Product;
 import com.chienpb.model.ProductCategory;
-import com.chienpb.service.BrandService;
-import com.chienpb.service.CategoryService;
-import com.chienpb.service.ProductService;
-import com.chienpb.service.UploadService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,13 +42,19 @@ public class ProductRestController {
 	@Autowired
 	UploadService uService;
 
+	@Autowired
+	SessionService session;
+
+	@Autowired
+	ImpactLogService iService;
+
 	@GetMapping("")
 	public Map<String, Object> get() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("brands", bService.findAll());
 		map.put("categories", cService.findAll());
 		map.put("products", pService.findAll());
-		map.put("productCates", pService.findProductCategory());
+//		map.put("productCates", pService.findProductCategory());
 		return map;
 	}
 
@@ -82,6 +88,12 @@ public class ProductRestController {
 	
 	@PostMapping("")
 	public Product postProduct(@RequestBody JsonNode data) {
+		Account account = session.get("user");
+		ImpactLog impactLog = new ImpactLog();
+		impactLog.setUsername(account.getUsername());
+		impactLog.setDescription("Thêm sản phẩm bởi " + account.getUsername());
+		impactLog.setImpactTime(LocalDateTime.now());
+		iService.save(impactLog);
 		return pService.save(data);
 	}
 
@@ -90,6 +102,12 @@ public class ProductRestController {
 		if (!pService.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		} else {
+			Account account = session.get("user");
+			ImpactLog impactLog = new ImpactLog();
+			impactLog.setUsername(account.getUsername());
+			impactLog.setDescription("Cập nhật sản phẩm bởi " + account.getUsername());
+			impactLog.setImpactTime(LocalDateTime.now());
+			iService.save(impactLog);
 			return ResponseEntity.ok(pService.save(data));
 		}
 	}
@@ -97,23 +115,17 @@ public class ProductRestController {
 	@DeleteMapping("/{id}")
 	public void deleteProduct(@PathVariable("id") Long id) {
 			Product product = pService.findById(id);
-			String images = product.getImages();
 			TypeReference<List<String>> typeString = new TypeReference<List<String>>() {
 			};
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				List<String> list = mapper.readValue(images, typeString);
-				System.out.println(list);
-				for(String filename : list) {
-					if(!filename.equalsIgnoreCase("logo.jpg")) {
-						uService.delete("product", filename);
-					}
-				}
-				List<ProductCategory> productCates = pService.findByProductId(id);
-				for(ProductCategory productCate : productCates) {
-					pService.deleteProductCateById(productCate.getId());
-				}
 				pService.deleteById(id);
+				Account account = session.get("user");
+				ImpactLog impactLog = new ImpactLog();
+				impactLog.setUsername(account.getUsername());
+				impactLog.setDescription("Xóa sản phẩm bởi " + account.getUsername());
+				impactLog.setImpactTime(LocalDateTime.now());
+				iService.save(impactLog);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

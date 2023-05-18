@@ -36,9 +36,15 @@ public class Order implements Serializable{
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
 
+	@Column(columnDefinition = "NVARCHAR(MAX)")
 	private String address;
 
 	private Double total;
+
+	private Integer status;
+
+	@Column(columnDefinition = "NVARCHAR(MAX)")
+	private String note;
 
 	@ManyToOne
 	@JoinColumn(name = "username")

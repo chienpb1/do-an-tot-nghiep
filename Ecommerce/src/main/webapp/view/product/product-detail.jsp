@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@ taglib prefix="security"
+           uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -39,7 +42,7 @@
 
     <!--Body Content-->
     <!--Body Content-->
-    <div class="mt-5" id="page-content">
+    <div id="page-content" style="margin-top: 5rem!important">
         <!--MainContent-->
         <div id="MainContent" class="main-content" role="main">
             <!--Breadcrumb-->
@@ -93,11 +96,11 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="product-single__meta">
-                                <h1 class="product-single__title">${product.product.name}</h1>
-<%--                                <div class="product-nav clearfix">--%>
-<%--                                    <a href="#" class="next" title="Next"><i--%>
-<%--                                            class="fa fa-angle-right" aria-hidden="true"></i></a>--%>
-<%--                                </div>--%>
+                                <h1 >${product.product.name}</h1>
+                                <%--                                <div class="product-nav clearfix">--%>
+                                <%--                                    <a href="#" class="next" title="Next"><i--%>
+                                <%--                                            class="fa fa-angle-right" aria-hidden="true"></i></a>--%>
+                                <%--                                </div>--%>
                                 <div class="product-info">
                                     <p class="product-type">
                                         <a style=" color:#447900" href="/product/list?bid=${product.product.brand.id}"
@@ -106,7 +109,8 @@
                                 </div>
                                 <div class="prInfoRow">
                                     <div class="product-stock">
-                                        <c:set var="qty" value="${product.product.unitsInStock}" /> <!-- lấy giá trị của product.product.price và gán vào biến price -->
+                                        <c:set var="qty" value="${product.product.unitsInStock}"/>
+                                        <!-- lấy giá trị của product.product.price và gán vào biến price -->
 
                                         <c:if test="${qty > 0}">
                                             <span style="color: red; font-weight: bold">Còn hàng</span>
@@ -122,8 +126,11 @@
                                         class="product-single__price product-single__price-product-template">
 										<span
                                                 class="product-price__price product-price__price-product-template">
-											<span id="ProductPrice-product-template"><span
-                                                    class="money">${product.product.price}</span> VNĐ</span>
+											<span id="ProductPrice-product-template">
+                                                <span class="money">
+                                                    <fmt:formatNumber value="${product.product.price}" type="currency" currencyCode="VND" />
+                                                </span>
+                                            </span>
 										</span>
                                 </p>
                                 <div class="product-single__description rte">
@@ -137,16 +144,20 @@
                                     <!-- Product Action -->
                                     <div class="product-action clearfix">
                                         <div class="product-form__item--submit">
-                                            <c:set var="qty" value="${product.product.unitsInStock}" /> <!-- lấy giá trị của product.product.price và gán vào biến price -->
+                                            <c:set var="qty" value="${product.product.unitsInStock}"/>
+                                            <!-- lấy giá trị của product.product.price và gán vào biến price -->
 
                                             <c:if test="${qty > 0}">
-                                                <button
-                                                        ng-click="cart.add(${product.product.id}) "
-                                                        type="button" name="add"
-                                                        class="btn product-form__cart-submit">
+                                                <c:if test="${empty sessionScope.userAdmin}">
+                                                    <button
+                                                            ng-click="cart.add(${product.product.id}) "
+                                                            type="button" name="add"
+                                                            class="btn product-form__cart-submit">
 													<span id="AddToCartText-product-template">Thêm vào
 														giỏ hàng</span>
-                                                </button>
+                                                    </button>
+                                                </c:if>
+
                                             </c:if>
 
                                             <c:if test="${qty <= 0}">
@@ -167,32 +178,9 @@
                                 <div class="display-table shareRow">
                                     <div class="display-table-cell medium-up--one-third">
                                         <div class="wishlist-btn">
-                                            <a class="wishlist add-to-wishlist" href="#"
-                                               title="Add to Wishlist"><i class="icon anm anm-heart-l"
-                                                                          aria-hidden="true"></i> <span>Thêm Vào Yêu Thích</span></a>
+
                                         </div>
                                     </div>
-<%--                                    <div class="display-table-cell text-right">--%>
-<%--                                        <div class="social-sharing">--%>
-<%--                                            <a target="_blank" href="#"--%>
-<%--                                               class="btn btn--small btn--secondary btn--share share-facebook"--%>
-<%--                                               title="Share on Facebook"> <i--%>
-<%--                                                    class="fa fa-facebook-square" aria-hidden="true"></i> <span--%>
-<%--                                                    class="share-title" aria-hidden="true">Facebook</span>--%>
-<%--                                            </a> <a target="_blank" href="#"--%>
-<%--                                                    class="btn btn--small btn--secondary btn--share share-twitter"--%>
-<%--                                                    title="Tweet on Twitter"> <i class="fa fa-twitter"--%>
-<%--                                                                                 aria-hidden="true"></i> <span--%>
-<%--                                                class="share-title"--%>
-<%--                                                aria-hidden="true">Tweet</span>--%>
-<%--                                        </a> <a href="#"--%>
-<%--                                                class="btn btn--small btn--secondary btn--share share-pinterest"--%>
-<%--                                                title="Share by Email" target="_blank"> <i--%>
-<%--                                                class="fa fa-envelope" aria-hidden="true"></i> <span--%>
-<%--                                                class="share-title" aria-hidden="true">Email</span>--%>
-<%--                                        </a>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
                                 </div>
                             </div>
                             <div class="product-info">
@@ -202,15 +190,15 @@
                                        title="Xem">${product.product.category.name}</a>
                                 </p>
                             </div>
-<%--                            <div class="product-info">--%>
-<%--                                <p class="product-type">--%>
-<%--                                    <span class="lbl">Loại hàng:</span>--%>
-<%--                                    <c:forEach var="c" items="${product.product.category}">--%>
-<%--                                    <a href="/product/list?cid=${c.category.id}"--%>
-<%--                                       title="Women's">${c.category.name}</a>--%>
-<%--                                </p>--%>
-<%--                                </c:forEach>--%>
-<%--                            </div>--%>
+                            <%--                            <div class="product-info">--%>
+                            <%--                                <p class="product-type">--%>
+                            <%--                                    <span class="lbl">Loại hàng:</span>--%>
+                            <%--                                    <c:forEach var="c" items="${product.product.category}">--%>
+                            <%--                                    <a href="/product/list?cid=${c.category.id}"--%>
+                            <%--                                       title="Women's">${c.category.name}</a>--%>
+                            <%--                                </p>--%>
+                            <%--                                </c:forEach>--%>
+                            <%--                            </div>--%>
 
                         </div>
                     </div>
@@ -261,12 +249,15 @@
                                         <!-- end product image -->
 
                                         <!-- Start product button -->
-                                        <form class="variants add">
-                                            <button ng-click="cart.add(${p.product.id})"
-                                                    class="btn btn-addto-cart" type="button" tabindex="0">ADD
-                                                TO CART
-                                            </button>
-                                        </form>
+                                        <c:if test="${empty sessionScope.userAdmin}">
+                                            <form class="variants add">
+                                                <button ng-click="cart.add(${p.product.id})"
+                                                        class="btn btn-addto-cart" type="button" tabindex="0">
+                                                    Thêm vào giỏ hàng
+                                                </button>
+                                            </form>
+                                        </c:if>
+
                                         <div class="button-set">
                                             <div class="wishlist-btn">
                                                 <a class="wishlist add-to-wishlist" href="wishlist.html">
@@ -287,7 +278,7 @@
                                         <!-- End product name -->
                                         <!-- product price -->
                                         <div class="product-price">
-                                            <span class="price">${p.product.price}</span>
+                                            <span class="price"><fmt:formatNumber value="${p.product.price}" currencyCode="VND"/></span>
                                         </div>
                                         <!-- End product price -->
 

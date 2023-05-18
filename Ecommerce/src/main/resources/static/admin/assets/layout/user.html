@@ -3,7 +3,7 @@
         <!-- begin page title -->
         <div class="d-block d-lg-flex flex-nowrap align-items-center">
             <div class="page-title mr-4 pr-4 border-right">
-                <h1>User Manager</h1>
+                <h1>Quản lý người dùng</h1>
             </div>
 
             <div class="ml-auto d-flex align-items-center secondary-menu text-center">
@@ -20,7 +20,7 @@
         <div class="card card-statistics">
             <div class="card-header">
                 <div class="card-heading">
-                    <h4 class="card-title">Edit Account</h4>
+                    <h4 class="card-title">Thông tin người dùng</h4>
                 </div>
             </div>
             <div class="card-body">
@@ -33,59 +33,84 @@
                     <div class="col-md-8">
                         <form name="frmAccount">
                             <div class="form-group">
-                                <label>Username</label>
-                                <input name="username" ng-model="account.username" required type="text"
-                                    class="form-control">
-                                <div ng-show="frmAccount.username.$invalid" class="badge badge-danger m-2">Id not null</div>
-                            </div>
-                            <div class="form-group">
-                                <label>Fullname</label>
-                                <input name="fullname" ng-model="account.fullname" required type="text"
-                                    class="form-control">
-                                <div ng-show="frmAccount.fullname.$invalid" class="badge badge-danger m-2">Id not null</div>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input name="email" ng-model="account.email" required type="email" class="form-control">
-                                <div ng-show="frmAccount.email.$invalid" class="badge badge-danger m-2">Id not null</div>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input name="password" ng-model="account.password" required type="password"
-                                    class="form-control">
-                                <div ng-show="frmAccount.password.$invalid" class="badge badge-danger m-2">Id not null</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="mr-2">Activate</label>
-                                <div class="form-check-inline">
-                                    <input ng-model="account.activated" class="form-check-input" type="radio"
-                                        name="activated" id="gridRadios1" ng-value="true"
-                                        ng-checked="account.activated">
-                                    <label class="form-check-label" for="gridRadios1">
-                                        True
-                                    </label>
+                                <label>Tên đăng nhập<span style="color: red">*</span></label>
+                                <input name="username"   ng-required="true" type="text"
+                                       placeholder="Nhập tên đăng nhập" ng-pattern="/^[a-zA-Z0-9._\\-]*$/" class="form-control">
+                                <div ng-show="frmAccount.username.$dirty && frmAccount.username.$error.required" class="badge badge-danger m-2">
+                                    Tên đăng nhập không được để trống
                                 </div>
-                                <div class="form-check-inline">
-                                    <input ng-model="account.activated" class="form-check-input" type="radio"
-                                        name="activated" id="gridRadios2" ng-value="false"
-                                        ng-checked="account.activated">
-                                    <label class="form-check-label" for="gridRadios2">
-                                        False
-                                    </label>
+                                <div ng-show="frmAccount.username.$dirty && frmAccount.username.$error.pattern"
+                                     class="badge badge-danger m-2">Tên đăng nhập không được chứa kí tự đặc biệt
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Photo</label>
+                                <label>Họ tên<span style="color: red">*</span></label>
+                                <input name="fullname" ng-model="account.fullname" ng-required="true" type="text"
+                                       placeholder="Nhập họ và tên" class="form-control">
+                                <div ng-show="frmAccount.fullname.$dirty && frmAccount.fullname.$error.required" class="badge badge-danger m-2">
+                                    Họ tên không được để trống
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại<span style="color: red">*</span></label>
+                                <input name="phoneNumber" ng-model="account.phoneNumber" ng-required="true" type="text"
+                                       placeholder="Nhập số điện thoại" class="form-control" maxlength="10"
+                                       ng-pattern="/^(0?)([1-9][2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/">
+                                <div ng-show="frmAccount.phoneNumber.$dirty && frmAccount.phoneNumber.$error.required" class="badge badge-danger m-2">
+                                    Số điện thoại không được để trống
+                                </div>
+                                <div ng-show="frmAccount.phoneNumber.$dirty && frmAccount.phoneNumber.$error.pattern"
+                                     class="badge badge-danger m-2">Số điện thoại không đúng định dạng
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email<span style="color: red">*</span></label>
+                                <input name="email" ng-model="account.email" ng-required="true" type="email"
+                                       placeholder="Địa chỉ email" class="form-control">
+                                <div ng-show="frmAccount.email.$dirty && frmAccount.email.$error.required"
+                                     class="badge badge-danger m-2">Vui lòng nhập email
+                                </div>
+                                <div ng-show="frmAccount.email.$dirty && frmAccount.email.$error.email"
+                                     class="badge badge-danger m-2">Email không đúng định dạng
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu<span style="color: red">*</span></label>
+                                <input name="password" ng-model="account.password" ng-required="true" type="password"
+                                       class="form-control" ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/">
+                                <div ng-show="frmAccount.password.$dirty && frmAccount.password.$error.required"
+                                     class="badge badge-danger m-2">Vui lòng nhập mật khẩu
+                                </div>
+                                <div ng-show="frmAccount.password.$dirty && frmAccount.password.$error.pattern"
+                                     class="badge badge-danger m-2">Mật khẩu phải tối thiểu 8 ký tự bao gồm chữ
+                                    in hoa, chữ in thường, ký tự đặc biệt và số.
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label>Quyền tài khoản</label>
+                                <select ng-model="account.role" ng-options="r.role for r in listRole track by r.role" class="form-control">
+<!--                                    <option ng-repeat="r in listRole" ng-value="r">{{r.role}}-->
+<!--                                    </option>-->
+                                </select>
+                                <!-- <div ng-show="frmProduct.name.$invalid" class="badge badge-danger m-2">Product not null</div> -->
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ảnh đại diện</label>
                                 <input type="file" accept="image/*"
-                                    onchange="angular.element(this).scope().imageChanged(this.files)">
+                                       onchange="angular.element(this).scope().imageChanged(this.files)">
                             </div>
                             <button ng-disabled="frmAccount.$invalid || chon == true" ng-click="create()"
-                                class="btn btn-primary">Create</button>
+                                    class="btn btn-primary">Thêm mới
+                            </button>
                             <button ng-disabled="frmAccount.$invalid || frmAccount.$pristine || chon == false"
-                                ng-click="update(account.username)" class="btn btn-info">Update</button>
-                            <button ng-click="reset()" class="btn btn-secondary">Reset</button>
-                            <button ng-disabled="chon == false" ng-click="delete(account.username)"
-                                class="btn btn-dark">Delete</button>
+                                    ng-click="update(account.username)" class="btn btn-info">Cập nhật
+                            </button>
+                            <button ng-click="reset()" class="btn btn-secondary">Nhập lại</button>
+<!--                            <button ng-disabled="chon == false" ng-click="delete(account.username)"-->
+<!--                                    class="btn btn-dark">Xóa-->
+<!--                            </button>-->
                         </form>
                     </div>
                 </div>
@@ -100,15 +125,20 @@
                 <div class="card-heading">
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <h4 class="card-title">Account Table</h4>
+                            <h4 class="card-title">Danh sách tài khoản</h4>
                         </div>
                         <div class="col-md-6">
                             <form class="justify-content-end">
                                 <div class="form-group">
                                     <input oninput="angular.element(this).scope().search(this.value)" type="text"
-                                        class="form-control" placeholder="Search">
+                                           class="form-control" placeholder="Tìm kiếm">
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            Tổng: {{totalRecords}} bản ghi
                         </div>
                     </div>
                 </div>
@@ -117,31 +147,64 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead class="thead-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Fullname</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Active</th>
-                                <th scope="col"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Họ tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Quyền tài khoản</th>
+                            <th scope="col"></th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="a in accounts">
-                                <th scope="row">{{$index+1}}</th>
-                                <td>{{a.username}}</td>
-                                <td>{{a.fullname}}</td>
-                                <td>{{a.email}}</td>
-                                <td>{{a.activated?'Yes':'No'}}</td>
-                                <td class="text-right">
-                                    <button ng-click="edit(a.username)" class="btn btn-primary">Edit</button>
-                                    <button ng-click="delete(a.username)" class="btn btn-dark">Delete</button>
-
-                                </td>
-                            </tr>
+                        <tr ng-repeat="a in accounts | orderBy: p.id | limitTo : pageSize : start">
+                            <td>{{$index+1+start}}</td>
+                            <td>{{a.username}}</td>
+                            <td>{{a.fullname}}</td>
+                            <td>{{a.email}}</td>
+                            <td>{{a.phoneNumber}}</td>
+                            <td>{{a.role.role}}</td>
+                            <td class="text-right">
+                                <button ng-if="!(a.role.role == 'director') || (a.role.role == 'director' && a.username == currentUsername)" ng-click="edit(a.username)" class="btn btn-primary">Sửa</button>
+                                <button ng-if="!(a.role.role == 'director')" data-toggle="modal" data-target="#myModalUser" ng-click="handleButtonClick(a.username)" class="btn btn-dark">Xóa</button>
+<!--                                <button ng-click="delete(a.username)" class="btn btn-dark">Xóa</button>-->
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-3 justify-content-center">
+                        <li ng-click="first()" class="page-item "><a class="page-link" href=""> << </a></li>
+                        <li ng-click="prev()" class="page-item ">
+                            <a class="page-link" href=""> < </a>
+                        </li>
+                        <li ng-click="next()" class="page-item"><a class="page-link" href=""> > </a></li>
+                        <li ng-click="last()" class="page-item"><a class="page-link" href=""> >> </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color: red; font-weight: bold">
+                Bạn có chắc chắn muốn xóa người dùng này?
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button ng-click="delete()" type="button" class="btn btn-primary">Đồng ý</button>
             </div>
         </div>
     </div>

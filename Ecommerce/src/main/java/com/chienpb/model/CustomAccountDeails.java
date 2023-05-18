@@ -1,14 +1,12 @@
 package com.chienpb.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomAccountDeails implements UserDetails{
-	
-	 
-	
 	private Account account;
 	
 	
@@ -16,6 +14,8 @@ public class CustomAccountDeails implements UserDetails{
 		
 		this.account = account;
 	}
+
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

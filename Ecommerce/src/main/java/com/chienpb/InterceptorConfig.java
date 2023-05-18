@@ -10,7 +10,9 @@ import com.chienpb.interceptor.GlobalInterceptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer{
-	@Autowired GlobalInterceptor globalinterceptor;
+	@Autowired
+	GlobalInterceptor globalinterceptor;
+
 	@Autowired 
 	AuthInterceptor auth;
 
@@ -19,10 +21,10 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		registry.addInterceptor(globalinterceptor)
 			.addPathPatterns("/**")
 			.excludePathPatterns("/admin/**","/assets/**");
-		/**
+
 		registry.addInterceptor(auth)
-			.addPathPatterns("/admin/**", "/order/**");
-			*/
+			.addPathPatterns("/admin/**");
+
 	}
 	
 	

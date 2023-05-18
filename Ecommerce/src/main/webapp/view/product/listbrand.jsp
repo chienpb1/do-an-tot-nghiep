@@ -48,7 +48,7 @@
 							src="/assets/images/cat-women2.jpg" alt="Women" title="Women" />
 					</div>
 					<div class="collection-hero__title-wrapper">
-						<h1 class="collection-hero__title page-width">LIST PRODUCT</h1>
+						<h1 class="collection-hero__title page-width">SẢN PHẨM</h1>
 					</div>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 							<!--Brand-->
 							<div class="sidebar_widget filterBox filter-widget">
 								<div class="widget-title">
-									<h2>Brands</h2>
+									<h2>Thương hiệu</h2>
 								</div>
 								<ul>
 									<form action="/product/list/brand">

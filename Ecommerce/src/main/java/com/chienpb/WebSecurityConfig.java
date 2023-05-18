@@ -52,16 +52,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**", "/order/**").authenticated()
+//                .antMatchers("/admin").hasRole("director")
+                .antMatchers("/admin/**", "/order/checkout/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
+                .failureUrl("/login?error=true")//
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .deleteCookies("JSESSIONID");
+
     }
 }

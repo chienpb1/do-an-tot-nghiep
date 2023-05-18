@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -8,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Cart</title>
+<title>Giỏ hàng</title>
 <meta name="description" content="description">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Favicon -->
@@ -39,7 +40,7 @@
 		<!--Body Content-->
 		<div id="page-content">
 			<!--Page Title-->
-			<div class="page section-header text-center mt-5">
+			<div class="page section-header text-center" style="margin-top: 5rem!important">
 				<div class="page-title">
 					<div class="wrapper">
 						<h1 class="page-width">Giỏ hàng</h1>
@@ -50,7 +51,7 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
 						<form action="#" method="post" class="cart style2">
 							<table>
 								<thead class="cart__row cart__header">
@@ -75,7 +76,7 @@
 											</div>
 										</td>
 										<td class="cart__price-wrapper cart-flex-item"><span
-											class="money">{{i.price | number: 0}}</span></td>
+											class="money">{{i.price | customNumber }}</span></td>
 										<td class="cart__update-wrapper cart-flex-item text-right">
 											<div class="cart__qty text-center">
 												<div class="qtyField">
@@ -91,8 +92,7 @@
 										</td>
 										<td class="text-right small--hide cart-price">
 											<div>
-												<span class="money">{{cart.priceItem(i.id) | number:
-													0}}</span>
+												<span class="money">{{cart.priceItem(i.id) | customNumber}}</span>
 											</div>
 										</td>
 										<td class="text-center small--hide"><a ng-click="cart.remove(i.id)" href=""
@@ -114,15 +114,17 @@
 								</tfoot>
 							</table>
 
-							<div class="currencymsg">Miễn phí vận chuyển đơn hàng từ
-								200K nội thành TPHCM, ngoại thành chịu phí ship sẽ được cập nhật
-								ở bước thanh toán</div>
+							<div class="currencymsg">Miễn phí vận chuyển</div>
 							<hr>
-
-
 						</form>
 					</div>
-					<div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
+
+				</div>
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 cart__footer">
+
+					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 cart__footer">
 						<div class="solid-border">
 							<div class="row">
 								<span class="col-12 col-sm-6 cart__subtotal-title"><strong>Tổng
@@ -131,14 +133,26 @@
 									class="money">{{cart.amount | number: 0}}</span></span>
 							</div>
 							<form action="/order/checkout">
-								<input type="submit" id="cartCheckout"
-									class=" mt-3 btn btn--small-wide checkout" value="Thanh toán">
+								<input ng-if="cart.amount > 0" type="submit" id="cartCheckout"
+									   class=" mt-3 btn btn--small-wide checkout" value="Thanh toán">
+
+								<input ng-if="cart.amount <= 0" type="submit" id="cartCheckout1" disabled="disabled"
+									   class=" mt-3 btn btn--small-wide checkout" value="Thanh toán">
 							</form>
+
+							<%--							<c:if test="${total = 0}">--%>
+							<%--								<form action="/order/checkout">--%>
+							<%--									<input type="submit" id="cartCheckout1" disabled="disabled"--%>
+							<%--										   class=" mt-3 btn btn--small-wide checkout" value="Thanh toán">--%>
+							<%--								</form>--%>
+							<%--							</c:if>--%>
+
+
+
 							<div class="paymnet-img">
 								<img src="/assets/images/payment-img.jpg" alt="Payment">
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>

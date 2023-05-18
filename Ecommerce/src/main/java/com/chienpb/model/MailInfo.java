@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MailInfo {
-	private String from = "linhvkquyen@gmail.com", to, cc[], bcc[], subject, body;
+	private String from = "chienpham.dev@gmail.com", to, cc[], bcc[], subject, body;
 	private List<File> attachments;
 	
 	public MailInfo(String to, String subject, String body) {

@@ -17,5 +17,7 @@ public interface BrandService {
 	void deleteById(String id);
 
 	List<Brand> findByName(String kw);
+
+	List<Brand> findAllBrandAndKhac();
 	
 }

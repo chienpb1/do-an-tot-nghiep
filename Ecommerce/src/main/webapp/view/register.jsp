@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Đăng ký tài khoản</title>
     <meta name="description" content="description">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -41,7 +41,7 @@
     <!--Body Content-->
     <div class="mt-5" id="page-content">
         <!--Page Title-->
-        <div class="page section-header text-center">
+        <div class="page section-header text-center" style="margin-top: 5rem!important">
             <div class="page-title">
                 <div class="wrapper">
                     <h1 class="page-width">Đăng ký tài khoản</h1>
@@ -59,8 +59,7 @@
                                    class="contact-form">
                             <div class="row">
                                 <c:if test="${not empty error }">
-                                    <div class="alert alert-danger alert-dismissible fade show"
-                                         role="alert">
+                                    <div class="alert alert-danger alert-dismissible fade show ml-3" role="alert">
                                         <strong>${error} </strong>
                                         <button type="button" class="close" data-dismiss="alert"
                                                 aria-label="Close">
@@ -72,8 +71,9 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label for="FirstName">Tên đăng nhập<span
-                                                style="color: red">*</span></label>
+                                        <label for="FirstName">Tên đăng nhập
+                                            <span style="color: red">*</span>
+                                        </label>
                                         <form:input path="username" ng-model="username" name="username"
                                                     ng-required="true"
                                                     placeholder="Nhập tên đăng nhập"
